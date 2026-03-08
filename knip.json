@@ -1,0 +1,10 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "next": true,
+  "exclude": ["unresolved"],
+  "paths": {
+    "@/*": ["./*"]
+  },
+  "ignore": ["components/ui/**"],
+  "ignoreExportsUsedInFile": true
+}

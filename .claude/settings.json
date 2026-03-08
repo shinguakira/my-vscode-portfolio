@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run format)",
+      "Bash(npm run lint:fix)",
+      "Bash(npm run check-themes)",
+      "Bash(npx playwright test e2e/features.spec.ts --update-snapshots)",
+      "Read(//e/workspace/**)"
+    ]
+  }
+}

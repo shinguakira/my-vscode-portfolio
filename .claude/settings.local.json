@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:oxc.rs)",
+      "Bash(pnpm add:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npx oxfmt:*)",
+      "Bash(pnpm approve-builds:*)",
+      "Bash(pnpm install:*)",
+      "Bash(node -e:*)",
+      "Bash(npm install:*)",
+      "Bash(npm ls:*)",
+      "Bash(where:*)",
+      "Bash(npx knip:*)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(xargs:*)",
+      "Bash(npm run knip:*)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(find:*)",
+      "Bash(npx tsc --noEmit)"
+    ]
+  }
+}

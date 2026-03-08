@@ -1,0 +1,44 @@
+{
+  "name": "my-v0-project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "oxfmt",
+    "type-check": "tsc --noEmit",
+    "check": "tsc --noEmit && oxfmt && eslint . --fix",
+    "knip": "knip",
+    "check-themes": "tsx scripts/check-themes.ts"
+  },
+  "dependencies": {
+    "@vercel/analytics": "1.3.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.454.0",
+    "next": "16.0.10",
+    "next-intl": "^4.8.3",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "tailwind-merge": "^3.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@tailwindcss/postcss": "^4.1.9",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.6",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "knip": "^5",
+    "oxfmt": "^0.31.0",
+    "postcss": "^8.5",
+    "tailwindcss": "^4.1.9",
+    "tsx": "^4.21.0",
+    "typescript": "^5"
+  }
+}
