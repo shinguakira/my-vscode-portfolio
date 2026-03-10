@@ -1,15 +1,16 @@
 "use client"
 
-import { ChevronRight } from "lucide-react"
-
-import { getAchievementStats, getSoftSkills, getStrengths } from "@/constants/preview-data"
+import { ErrorState } from "@/components/preview/error-state"
+import { LoadingState } from "@/components/preview/loading-state"
 import { useLocale } from "@/contexts/locale-context"
+import { useStrongPointsData } from "@/hooks/use-strong-points-data"
 
 export function ModernStrongPoints() {
   const locale = useLocale()
-  const STRENGTHS = getStrengths(locale)
-  const SOFT_SKILLS = getSoftSkills(locale)
-  const ACHIEVEMENT_STATS = getAchievementStats(locale)
+  const { data: strongPoints, loading, error } = useStrongPointsData()
+
+  if (loading) return <LoadingState />
+  if (error || !strongPoints) return <ErrorState message={error ?? undefined} />
 
   return (
     <div className="min-h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
@@ -24,60 +25,22 @@ export function ModernStrongPoints() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 short:gap-3 mb-12 short:mb-4">
-          {STRENGTHS.map((item, i) => (
+          {strongPoints.map((item, i) => (
             <div
               key={i}
               className="rounded-xl shadow-sm p-8 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur hover:border-slate-700 transition-all group"
             >
-              <div
-                className={`w-16 h-16 short:w-10 short:h-10 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center text-3xl short:text-xl mb-6 short:mb-2 group-hover:scale-110 transition-transform`}
-              >
-                {item.icon}
-              </div>
-              <h3
-                className={`text-2xl short:text-base font-bold mb-3 short:mb-1 text-transparent bg-clip-text bg-gradient-to-r ${item.color}`}
-              >
-                {item.title}
+              <h3 className="text-2xl short:text-base font-bold mb-3 short:mb-1 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+                {item.question}
               </h3>
-              <p className="text-slate-400 leading-relaxed short:text-sm">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="rounded-xl shadow-sm p-8 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur mb-8 short:mb-3">
-          <h3 className="text-2xl short:text-base font-bold mb-6 short:mb-2 text-white flex items-center gap-3">
-            <span className="text-3xl short:text-lg">💬</span>
-            {locale === "en" ? "Soft Skills" : "ソフトスキル"}
-          </h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            {SOFT_SKILLS.map((section) => (
-              <div key={section.title}>
-                <h4 className="text-lg font-semibold text-white mb-3">{section.title}</h4>
-                <ul className="space-y-2">
-                  {section.items.map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-slate-400">
-                      <ChevronRight className="w-4 h-4 text-cyan-400" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-4 gap-4 short:gap-2">
-          {ACHIEVEMENT_STATS.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-xl shadow-sm p-6 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur text-center"
-            >
-              <div
-                className={`text-3xl short:text-xl font-bold mb-2 short:mb-1 text-transparent bg-clip-text bg-gradient-to-r ${stat.color}`}
-              >
-                {stat.num}
-              </div>
-              <div className="text-sm text-slate-500">{stat.label}</div>
+              {item.size && (
+                <div className="mb-3 short:mb-1 inline-block">
+                  <span className="rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 px-4 py-1.5 text-xs font-bold text-white shadow-md">
+                    Level: {item.size}
+                  </span>
+                </div>
+              )}
+              <p className="text-slate-400 leading-relaxed short:text-sm">{item.answer}</p>
             </div>
           ))}
         </div>

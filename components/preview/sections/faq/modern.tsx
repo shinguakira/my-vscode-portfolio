@@ -1,13 +1,18 @@
 "use client"
 
-import { getFaqItems } from "@/constants/preview-data"
+import { ErrorState } from "@/components/preview/error-state"
+import { LoadingState } from "@/components/preview/loading-state"
 import { useLocale } from "@/contexts/locale-context"
+import { useFaqData } from "@/hooks/use-faq-data"
 
 const COLORS = ["orange", "amber", "yellow", "orange", "amber", "yellow"]
 
 export function ModernFaq() {
   const locale = useLocale()
-  const FAQ_ITEMS = getFaqItems(locale)
+  const { data: faqItems, loading, error } = useFaqData()
+
+  if (loading) return <LoadingState />
+  if (error || !faqItems) return <ErrorState message={error ?? undefined} />
 
   return (
     <div className="min-h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
@@ -22,20 +27,32 @@ export function ModernFaq() {
         </div>
 
         <div className="space-y-6 short:space-y-3">
-          {FAQ_ITEMS.map((item, i) => (
+          {faqItems.map((item, i) => (
             <div
               key={i}
               className="rounded-xl shadow-sm p-6 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur hover:border-slate-700 transition-all"
             >
               <div className="flex items-start gap-4">
                 <div
-                  className={`w-10 h-10 rounded-xl bg-${COLORS[i]}-600/20 flex items-center justify-center shrink-0`}
+                  className={`w-10 h-10 rounded-xl bg-${COLORS[i % COLORS.length]}-600/20 flex items-center justify-center shrink-0`}
                 >
-                  <span className={`text-${COLORS[i]}-400 font-bold`}>Q</span>
+                  <span className={`text-${COLORS[i % COLORS.length]}-400 font-bold`}>Q</span>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-white mb-2">{item.q}</h3>
-                  <p className="text-slate-400 leading-relaxed">{item.a}</p>
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="text-lg font-semibold text-white">{item.question}</h3>
+                    {item.category && (
+                      <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-${COLORS[i % COLORS.length]}-500/20 text-${COLORS[i % COLORS.length]}-300 border border-${COLORS[i % COLORS.length]}-500/30`}>
+                        {item.category}
+                      </span>
+                    )}
+                    {item.size && (
+                      <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium bg-slate-700/50 text-slate-400 border border-slate-600/30">
+                        {item.size}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-slate-400 leading-relaxed">{item.answer}</p>
                 </div>
               </div>
             </div>

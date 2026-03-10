@@ -1,11 +1,25 @@
 "use client"
 
-import { getFaqCategories } from "@/constants/preview-data"
+import { ErrorState } from "@/components/preview/error-state"
+import { LoadingState } from "@/components/preview/loading-state"
 import { useLocale } from "@/contexts/locale-context"
+import { useFaqData } from "@/hooks/use-faq-data"
 
 export function ProfessionalFaq() {
   const locale = useLocale()
-  const FAQ_CATEGORIES = getFaqCategories(locale)
+  const { data: faqItems, loading, error } = useFaqData()
+
+  if (loading) return <LoadingState />
+  if (error || !faqItems) return <ErrorState message={error ?? undefined} />
+
+  // Group by category
+  const categories = new Map<string, typeof faqItems>()
+  for (const item of faqItems) {
+    const cat = item.category || "Other"
+    const list = categories.get(cat) ?? []
+    list.push(item)
+    categories.set(cat, list)
+  }
 
   return (
     <div className="min-h-full bg-white">
@@ -20,19 +34,24 @@ export function ProfessionalFaq() {
         </div>
 
         <div className="space-y-0">
-          {FAQ_CATEGORIES.map((section) => (
-            <div key={section.category} className="mb-12 short:mb-4">
+          {Array.from(categories.entries()).map(([category, items]) => (
+            <div key={category} className="mb-12 short:mb-4">
               <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6 pb-3 border-b border-gray-200">
-                {section.category}
+                {category}
               </h2>
               <div className="space-y-6">
-                {section.questions.map((item) => (
-                  <div key={item.q} className="grid md:grid-cols-12 gap-4">
+                {items.map((item, i) => (
+                  <div key={i} className="grid md:grid-cols-12 gap-4">
                     <div className="md:col-span-5">
-                      <p className="font-medium text-gray-900">{item.q}</p>
+                      <p className="font-medium text-gray-900">{item.question}</p>
+                      {item.size && (
+                        <span className="inline-flex items-center mt-1 rounded px-1.5 py-0.5 text-[10px] font-medium bg-gray-100 text-gray-500 border border-gray-200">
+                          {item.size}
+                        </span>
+                      )}
                     </div>
                     <div className="md:col-span-7">
-                      <p className="text-gray-600 leading-relaxed text-sm">{item.a}</p>
+                      <p className="text-gray-600 leading-relaxed text-sm">{item.answer}</p>
                     </div>
                   </div>
                 ))}

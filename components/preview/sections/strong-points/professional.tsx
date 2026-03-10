@@ -1,13 +1,16 @@
 "use client"
 
-import { getAchievementStats, getSoftSkills, getStrengths } from "@/constants/preview-data"
+import { ErrorState } from "@/components/preview/error-state"
+import { LoadingState } from "@/components/preview/loading-state"
 import { useLocale } from "@/contexts/locale-context"
+import { useStrongPointsData } from "@/hooks/use-strong-points-data"
 
 export function ProfessionalStrongPoints() {
   const locale = useLocale()
-  const STRENGTHS = getStrengths(locale)
-  const SOFT_SKILLS = getSoftSkills(locale)
-  const ACHIEVEMENT_STATS = getAchievementStats(locale)
+  const { data: strongPoints, loading, error } = useStrongPointsData()
+
+  if (loading) return <LoadingState />
+  if (error || !strongPoints) return <ErrorState message={error ?? undefined} />
 
   return (
     <div className="min-h-full bg-white">
@@ -24,52 +27,23 @@ export function ProfessionalStrongPoints() {
         <div className="space-y-12 short:space-y-4 mb-16 short:mb-4">
           <div>
             <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6 pb-3 border-b border-gray-200">
-              {locale === "en" ? "Technical Strengths" : "技術的な強み"}
+              {locale === "en" ? "Key Strengths" : "主な強み"}
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
-              {STRENGTHS.map((item) => (
-                <div key={item.title} className="border-l-2 border-gray-900 pl-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
-                  <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
+              {strongPoints.map((item, i) => (
+                <div key={i} className="border-l-2 border-gray-900 pl-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{item.question}</h3>
+                  {item.size && (
+                    <div className="mb-2 inline-block">
+                      <span className="rounded-full border border-gray-900 bg-gray-900 px-3 py-1 text-xs font-bold text-white">
+                        Level: {item.size}
+                      </span>
+                    </div>
+                  )}
+                  <p className="text-gray-600 leading-relaxed text-sm">{item.answer}</p>
                 </div>
               ))}
             </div>
-          </div>
-
-          <div>
-            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6 pb-3 border-b border-gray-200">
-              {locale === "en" ? "Soft Skills" : "ソフトスキル"}
-            </h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {SOFT_SKILLS.map((item) => (
-                <div key={item.title}>
-                  <h3 className="font-bold text-gray-900 mb-3">{item.title}</h3>
-                  <ul className="space-y-2">
-                    {item.items.map((i) => (
-                      <li key={i} className="text-sm text-gray-600 pl-3 border-l border-gray-300">
-                        {i}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-200 pt-12 short:pt-4">
-          <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6">
-            {locale === "en" ? "Achievement Summary" : "実績サマリー"}
-          </h2>
-          <div className="grid md:grid-cols-4 gap-6 short:gap-3 text-center">
-            {ACHIEVEMENT_STATS.map((stat) => (
-              <div key={stat.label} className="border border-gray-200 p-6 short:p-3">
-                <div className="text-3xl short:text-xl font-bold text-gray-900 mb-1">
-                  {stat.num}
-                </div>
-                <div className="text-xs text-gray-500 uppercase tracking-wide">{stat.label}</div>
-              </div>
-            ))}
           </div>
         </div>
       </div>

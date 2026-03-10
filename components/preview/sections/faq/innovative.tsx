@@ -1,11 +1,16 @@
 "use client"
 
-import { getFaqItems } from "@/constants/preview-data"
+import { ErrorState } from "@/components/preview/error-state"
+import { LoadingState } from "@/components/preview/loading-state"
 import { useLocale } from "@/contexts/locale-context"
+import { useFaqData } from "@/hooks/use-faq-data"
 
 export function InnovativeFaq() {
   const locale = useLocale()
-  const FAQ_ITEMS = getFaqItems(locale)
+  const { data: faqItems, loading, error } = useFaqData()
+
+  if (loading) return <LoadingState />
+  if (error || !faqItems) return <ErrorState message={error ?? undefined} />
 
   return (
     <div className="min-h-full bg-black relative overflow-hidden">
@@ -25,7 +30,7 @@ export function InnovativeFaq() {
         </div>
 
         <div className="space-y-6 short:space-y-3">
-          {FAQ_ITEMS.slice(0, 5).map((item, i) => (
+          {faqItems.map((item, i) => (
             <div key={i} className="group relative">
               <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl blur opacity-20 group-hover:opacity-50 transition duration-500" />
               <div className="relative bg-black border border-gray-800 rounded-2xl p-8 short:p-4">
@@ -34,10 +39,22 @@ export function InnovativeFaq() {
                     Q
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl short:text-base font-bold text-white mb-4 short:mb-1">
-                      {item.q}
-                    </h3>
-                    <p className="text-gray-400 leading-relaxed short:text-sm">{item.a}</p>
+                    <div className="flex items-center gap-3 mb-4 short:mb-1">
+                      <h3 className="text-xl short:text-base font-bold text-white">
+                        {item.question}
+                      </h3>
+                      {item.category && (
+                        <span className="inline-flex items-center rounded-full px-3 py-0.5 text-xs font-semibold bg-gradient-to-r from-orange-500/20 to-yellow-500/20 text-orange-300 border border-orange-500/30 whitespace-nowrap">
+                          {item.category}
+                        </span>
+                      )}
+                      {item.size && (
+                        <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium bg-gray-800 text-gray-400 border border-gray-700 whitespace-nowrap">
+                          {item.size}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-gray-400 leading-relaxed short:text-sm">{item.answer}</p>
                   </div>
                 </div>
               </div>

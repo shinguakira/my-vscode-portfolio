@@ -1,11 +1,16 @@
 "use client"
 
-import { getProjectsProfessional } from "@/constants/preview-data"
+import { ErrorState } from "@/components/preview/error-state"
+import { LoadingState } from "@/components/preview/loading-state"
 import { useLocale } from "@/contexts/locale-context"
+import { useProjectsData } from "@/hooks/use-projects-data"
 
 export function ProfessionalProjects() {
   const locale = useLocale()
-  const projects = getProjectsProfessional(locale)
+  const { data: projects, loading, error } = useProjectsData()
+
+  if (loading) return <LoadingState />
+  if (error || !projects) return <ErrorState message={error ?? undefined} />
 
   return (
     <div className="min-h-full bg-white">
@@ -20,34 +25,48 @@ export function ProfessionalProjects() {
         </div>
 
         <div className="space-y-20 short:space-y-6">
-          {projects.map((project) => (
-            <div key={project.num} className="grid md:grid-cols-12 gap-8 items-start">
+          {projects.map((project, i) => (
+            <div key={i} className="grid md:grid-cols-12 gap-8 items-start">
               <div className="md:col-span-2">
-                <div className="text-6xl short:text-2xl font-bold text-gray-200">{project.num}</div>
+                <div className="text-6xl short:text-2xl font-bold text-gray-200">
+                  {String(i + 1).padStart(2, "0")}
+                </div>
               </div>
               <div className="md:col-span-10 border-l-2 border-gray-900 pl-8 short:pl-4">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="text-3xl short:text-lg font-serif font-bold text-gray-900 mb-2 short:mb-1">
-                      {project.title}
-                    </h3>
-                    <div className="flex items-center gap-4 text-sm text-gray-600">
-                      <span>{project.client}</span>
-                      <span>•</span>
-                      <span>{project.year}</span>
-                    </div>
-                  </div>
-                </div>
+                <h3 className="text-3xl short:text-lg font-serif font-bold text-gray-900 mb-2 short:mb-1">
+                  {project.title}
+                </h3>
                 <p className="text-gray-700 leading-relaxed mb-6 short:mb-2 max-w-2xl short:text-sm">
-                  {project.desc}
+                  {project.description}
                 </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.technologies.map((tech) => (
+                    <span key={tech} className="px-3 py-1 border border-gray-300 text-gray-700 text-sm">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
                 <div className="flex gap-4">
-                  <button className="px-6 py-2 bg-gray-900 text-white font-medium hover:bg-gray-800 transition">
-                    {locale === "en" ? "View Details" : "詳細を見る"}
-                  </button>
-                  <button className="px-6 py-2 border-2 border-gray-900 text-gray-900 font-medium hover:bg-gray-50 transition">
-                    {locale === "en" ? "Live Site" : "ライブサイト"}
-                  </button>
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-2 bg-gray-900 text-white font-medium hover:bg-gray-800 transition"
+                    >
+                      {locale === "en" ? "Live Site" : "ライブサイト"}
+                    </a>
+                  )}
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-2 border-2 border-gray-900 text-gray-900 font-medium hover:bg-gray-50 transition"
+                    >
+                      GitHub
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

@@ -1,26 +1,30 @@
 "use client"
 
-import { getSkillCategories, OTHER_TOOLS } from "@/constants/preview-data"
-import { useLocale } from "@/contexts/locale-context"
+import { useMemo } from "react"
 
-function getRankBadge(rank: string) {
-  switch (rank) {
-    case "S":
-      return "bg-amber-500/20 text-amber-400 border-amber-500/50"
-    case "A":
-      return "bg-rose-500/20 text-rose-400 border-rose-500/50"
-    case "B":
-      return "bg-violet-500/20 text-violet-400 border-violet-500/50"
-    case "C":
-      return "bg-blue-500/20 text-blue-400 border-blue-500/50"
-    default:
-      return "bg-slate-500/20 text-slate-400 border-slate-500/50"
-  }
-}
+import { ErrorState } from "@/components/preview/error-state"
+import { LoadingState } from "@/components/preview/loading-state"
+import { useLocale } from "@/contexts/locale-context"
+import { useSkillsData } from "@/hooks/use-skills-data"
+import { resolveApiImageUrl } from "@/lib/api/client"
 
 export function ModernSkills() {
   const locale = useLocale()
-  const skillCategories = getSkillCategories(locale)
+  const { data: skills, loading, error } = useSkillsData()
+
+  const grouped = useMemo(() => {
+    if (!skills) return []
+    const map = new Map<string, typeof skills>()
+    for (const s of skills) {
+      const list = map.get(s.category) ?? []
+      list.push(s)
+      map.set(s.category, list)
+    }
+    return Array.from(map.entries())
+  }, [skills])
+
+  if (loading) return <LoadingState />
+  if (error || !skills) return <ErrorState message={error ?? undefined} />
 
   return (
     <div className="min-h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
@@ -35,55 +39,49 @@ export function ModernSkills() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 short:gap-3">
-          {skillCategories.map((cat) => (
+          {grouped.map(([category, items]) => (
             <div
-              key={cat.category}
+              key={category}
               className="rounded-xl shadow-sm p-6 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur"
             >
-              <h3 className="text-xl short:text-base font-bold mb-6 short:mb-2 text-white flex items-center gap-3">
-                <span className="text-2xl short:text-lg">{cat.icon}</span>
-                {cat.category}
+              <h3 className="text-xl short:text-base font-bold mb-6 short:mb-2 text-white">
+                {category}
               </h3>
               <div className="space-y-3">
-                {cat.skills.map((skill) => (
+                {items.map((skill) => (
                   <div
                     key={skill.name}
                     className="flex items-center justify-between p-3 rounded-lg bg-slate-800/50"
                   >
-                    <span className="text-slate-300 font-medium">{skill.name}</span>
                     <div className="flex items-center gap-3">
-                      <span className="text-slate-500 text-sm">
-                        {skill.years}
-                        {locale === "en" ? " yr(s)" : "年"}
-                      </span>
-                      <span
-                        className={`px-3 py-1 text-sm font-bold border rounded-lg ${getRankBadge(skill.rank)}`}
-                      >
-                        {skill.rank}
-                      </span>
+                      {skill.picture && (
+                        <div
+                          className="flex size-8 items-center justify-center rounded-md p-1 bg-white"
+                        >
+                          <img
+                            src={resolveApiImageUrl(skill.picture)}
+                            alt={skill.name}
+                            width={24}
+                            height={24}
+                            className="object-contain"
+                          />
+                        </div>
+                      )}
+                      <span className="text-slate-300 font-medium">{skill.name}</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-slate-500 text-sm">{skill.years}</span>
+                      {skill.proficiency && (
+                        <span className="px-3 py-1 text-sm font-bold border rounded-lg bg-blue-500/20 text-blue-400 border-blue-500/50">
+                          {skill.proficiency}
+                        </span>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="rounded-xl shadow-sm mt-8 short:mt-3 p-6 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur">
-          <h3 className="text-xl short:text-base font-bold mb-6 short:mb-2 text-white flex items-center gap-3">
-            <span className="text-2xl short:text-lg">🛠️</span>
-            {locale === "en" ? "Other Tools & Technologies" : "その他のツール & 技術"}
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            {OTHER_TOOLS.map((tool) => (
-              <span
-                key={tool}
-                className="inline-flex items-center rounded-md text-xs font-medium px-4 py-2 bg-slate-800 text-slate-300 border-slate-700 text-sm"
-              >
-                {tool}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
     </div>

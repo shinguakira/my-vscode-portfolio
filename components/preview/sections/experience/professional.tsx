@@ -1,12 +1,15 @@
 "use client"
 
 import { CareerTimeline } from "@/components/career-timeline/career-timeline"
-import { getCareerProjects } from "@/constants/career-data"
-import { useLocale } from "@/contexts/locale-context"
+import { ErrorState } from "@/components/preview/error-state"
+import { LoadingState } from "@/components/preview/loading-state"
+import { useExperienceData } from "@/hooks/use-experience-data"
 
 export function ProfessionalExperience() {
-  const locale = useLocale()
-  const careerProjects = getCareerProjects(locale)
+  const { data, loading, error } = useExperienceData()
 
-  return <CareerTimeline projects={careerProjects} variant="professional" />
+  if (loading) return <LoadingState />
+  if (error || !data) return <ErrorState message={error ?? undefined} />
+
+  return <CareerTimeline experiences={data} variant="professional" />
 }
