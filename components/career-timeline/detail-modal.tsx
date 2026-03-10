@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef } from "react"
 import { useLocale } from "@/contexts/locale-context"
 import { cn } from "@/lib/utils"
 
-import type { CareerProject, TimelineVariant } from "./career-timeline"
+import type { TimelineItem, TimelineVariant } from "./career-timeline"
 import { durationJa, fmtLong } from "./timeline-helpers"
 import { variantStyles } from "./timeline-styles"
 
@@ -17,8 +17,8 @@ export function DetailModal({
   onClose,
   variant = "modern",
 }: {
-  project: CareerProject | null
-  allProjects: CareerProject[]
+  project: TimelineItem | null
+  allProjects: TimelineItem[]
   overlaps: Map<string, string[]>
   onClose: () => void
   variant?: TimelineVariant

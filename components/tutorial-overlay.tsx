@@ -196,7 +196,7 @@ export function TutorialOverlay({
     setIsTutorialActive(false)
     onUIStateChange({ sidebarMode: "explorer", terminalOpen: false, sidebarCollapsed: false })
     if (onTogglePreview) {
-      onTogglePreview(false)
+      onTogglePreview(true)
     }
   }
 

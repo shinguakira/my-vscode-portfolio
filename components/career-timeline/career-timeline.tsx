@@ -1,5 +1,6 @@
 "use client"
 
+import type { WorkExperience } from "@shinguakira/portfolio-api-types"
 import { GraduationCap } from "lucide-react"
 import { useCallback, useMemo, useState } from "react"
 
@@ -22,23 +23,72 @@ import {
 } from "./timeline-helpers"
 import { variantStyles } from "./timeline-styles"
 
-/* ─── Public types ─── */
+/* ─── Internal timeline item (mapped from WorkExperience for rendering) ─── */
 
-export interface CareerProject {
+export interface TimelineItem {
   id: string
   name: string
   company: string
   role: string
-  startDate: string // YYYY-MM
-  endDate: string | "present" // YYYY-MM or "present"
-  color: string // hex e.g. "#3ecfb0"
+  startDate: string
+  endDate: string
+  color: string
   tags: string[]
   description: string
   highlights: string[]
-  teamSize?: number
+  teamSize?: string
+  period: string
 }
 
 export type TimelineVariant = "innovative" | "professional" | "modern"
+
+/* ─── Colors for blocks ─── */
+
+const BLOCK_COLORS = ["#8b5cf6", "#3b82f6", "#14b8a6", "#f59e0b", "#ef4444", "#06b6d4", "#ec4899", "#10b981"]
+
+/* ─── Parse WorkExperience.period to startDate/endDate ─── */
+
+function extractYearMonth(s: string): string {
+  if (!s) return ""
+  if (s.includes("現在") || s.toLowerCase().includes("present") || s.includes("(現在)")) return "present"
+  const jaMatch = s.match(/(\d{4})年(\d{1,2})月/)
+  if (jaMatch) return `${jaMatch[1]}-${jaMatch[2].padStart(2, "0")}`
+  const isoMatch = s.match(/(\d{4})[/-](\d{1,2})/)
+  if (isoMatch) return `${isoMatch[1]}-${isoMatch[2].padStart(2, "0")}`
+  const yearMatch = s.match(/(\d{4})/)
+  if (yearMatch) return `${yearMatch[1]}-01`
+  return ""
+}
+
+function parsePeriod(period: string): { startDate: string; endDate: string } {
+  const parts = period.split(/\s*[-–]\s*/)
+  const start = extractYearMonth(parts[0]?.trim() ?? "")
+  const end = extractYearMonth(parts[1]?.trim() ?? "")
+  return {
+    startDate: start || "2020-01",
+    endDate: end || "present",
+  }
+}
+
+function toTimelineItems(experiences: WorkExperience[]): TimelineItem[] {
+  return experiences.map((exp, i) => {
+    const { startDate, endDate } = parsePeriod(exp.period)
+    return {
+      id: `${exp.company}-${i}`,
+      name: exp.projectOverview || exp.role,
+      company: exp.company,
+      role: exp.role,
+      startDate,
+      endDate,
+      color: BLOCK_COLORS[i % BLOCK_COLORS.length],
+      tags: exp.technologies,
+      description: exp.description.join("\n"),
+      highlights: exp.archivement,
+      teamSize: exp.teamSize,
+      period: exp.period,
+    }
+  })
+}
 
 /* ─── Education data ─── */
 
@@ -50,15 +100,17 @@ const educationData = {
 /* ─── Main exported component ─── */
 
 export function CareerTimeline({
-  projects,
+  experiences,
   variant = "modern",
 }: {
-  projects: CareerProject[]
+  experiences: WorkExperience[]
   variant?: TimelineVariant
 }) {
   const locale = useLocale()
   const education = locale === "en" ? educationData.en : educationData.ja
   const s = variantStyles[variant]
+
+  const projects = useMemo(() => toTimelineItems(experiences), [experiences])
   const { minD, maxD } = useMemo(() => getRange(projects), [projects])
   const totalH = useMemo(() => monthsBetween(minD, maxD) * PX, [minD, maxD])
   const columns = useMemo(() => packColumns(projects), [projects])
@@ -73,7 +125,7 @@ export function CareerTimeline({
   }, [minD, maxD])
 
   const [hovered, setHovered] = useState<string | null>(null)
-  const [selected, setSelected] = useState<CareerProject | null>(null)
+  const [selected, setSelected] = useState<TimelineItem | null>(null)
 
   const isLit = useCallback(
     (id: string) => {
@@ -88,7 +140,6 @@ export function CareerTimeline({
 
   return (
     <div className={s.wrapper}>
-      {/* Background decorations (innovative only) */}
       {s.bg1 && (
         <div className="absolute inset-0">
           <div className={s.bg1} />
@@ -97,7 +148,6 @@ export function CareerTimeline({
       )}
 
       <div className={s.inner}>
-        {/* Title */}
         <div>
           <h1 className={s.title}>
             {variant === "innovative" ? "CAREER" : locale === "en" ? "Work Experience" : "職務経歴"}
@@ -111,13 +161,11 @@ export function CareerTimeline({
           </p>
         </div>
 
-        {/* Timeline chart */}
         <div className="overflow-x-auto pb-4 mb-8">
           <div
             className="relative flex"
             style={{ height: totalH + 32, minWidth: chartW + RULER_W + 16 }}
           >
-            {/* Year ruler */}
             <div className="shrink-0 relative" style={{ width: RULER_W }}>
               {years.map(({ year, top }) => (
                 <div key={year} className="absolute left-0 flex items-center gap-1" style={{ top }}>
@@ -129,9 +177,7 @@ export function CareerTimeline({
               ))}
             </div>
 
-            {/* Lane area */}
             <div className="relative" style={{ width: chartW }}>
-              {/* Grid lines */}
               {years.map(({ year, top }) => (
                 <div
                   key={`g-${year}`}
@@ -140,7 +186,6 @@ export function CareerTimeline({
                 />
               ))}
 
-              {/* Blocks */}
               {projects.map((p) => {
                 const start = parseDate(p.startDate)
                 const end = parseDate(p.endDate)
@@ -169,7 +214,6 @@ export function CareerTimeline({
                     onMouseLeave={() => setHovered(null)}
                     onClick={() => setSelected(p)}
                   >
-                    {/* Background */}
                     <div
                       className={cn(
                         "absolute inset-0 rounded-lg transition-all duration-300",
@@ -185,7 +229,6 @@ export function CareerTimeline({
                       }}
                     />
 
-                    {/* Content */}
                     <div className="relative h-full px-3 py-2.5 flex flex-col overflow-hidden">
                       <div className="min-w-0">
                         <p
@@ -244,7 +287,6 @@ export function CareerTimeline({
           </div>
         </div>
 
-        {/* Education */}
         <div className={s.educationBg}>
           <div className="flex items-center gap-4">
             {variant !== "professional" && (

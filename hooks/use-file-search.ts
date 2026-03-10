@@ -1,14 +1,24 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
-import { getFileTree } from "@/constants/portfolio-data"
 import type { FileItem, SearchResult } from "@/types"
+import { useProjectsData } from "./use-projects-data"
 
 export function useFileSearch(openFile: (file: FileItem, path: string[]) => void, locale: string) {
-  const fileTree = getFileTree(locale)
+  const { data: projects } = useProjectsData()
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
+
+  const fileTree = useMemo<FileItem[]>(() => {
+    if (!projects) return []
+    return projects.map((p) => ({
+      name: `${p.title.toLowerCase().replace(/\s+/g, "-")}.md`,
+      type: "file" as const,
+      icon: "markdown",
+      content: `# ${p.title}\n\n${p.description}\n\n## Technologies\n${p.technologies.join(", ")}`,
+    }))
+  }, [projects])
 
   const searchInFiles = (query: string) => {
     if (!query.trim()) {

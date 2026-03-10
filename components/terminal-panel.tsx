@@ -4,17 +4,36 @@ import { ChevronUp, Trash2 } from "lucide-react"
 import type React from "react"
 import { useCallback, useEffect, useRef, useState } from "react"
 
-import { getGitHistory } from "@/constants/portfolio-data"
-import {
-  TERMINAL_HELP_TEXT,
-  TERMINAL_INITIAL_LOGS,
-  TERMINAL_LS_FILES,
-  TERMINAL_START_SEQUENCE,
-} from "@/constants/preview-data"
-import { useLocale } from "@/contexts/locale-context"
+import { useExperienceData } from "@/hooks/use-experience-data"
 import { useTheme } from "@/contexts/theme-context"
 import { adjustBrightness } from "@/lib/color-utils"
 import { cn } from "@/lib/utils"
+
+const TERMINAL_INITIAL_LOGS = [
+  "Welcome to Portfolio Terminal v1.0.0",
+  "Type 'help' for available commands.",
+  "",
+]
+
+const TERMINAL_HELP_TEXT = [
+  "Available commands:",
+  "  help          - Show this help message",
+  "  ls            - List files",
+  "  clear / cls   - Clear terminal",
+  "  npm run start - Run portfolio timeline",
+  "",
+]
+
+const TERMINAL_LS_FILES = [
+  "about.md", "projects.md", "skills.md", "experience.md",
+  "contact.md", "faq.md", "strong-points.md", "changelog.md",
+]
+
+const TERMINAL_START_SEQUENCE = [
+  "Starting portfolio...",
+  "Compiling...",
+  "Loading experience data...",
+]
 
 interface TerminalPanelProps {
   isOpen: boolean
@@ -29,8 +48,7 @@ interface LogEntry {
 }
 
 export function TerminalPanel({ isOpen, onCommandRef }: TerminalPanelProps) {
-  const locale = useLocale()
-  const gitHistory = getGitHistory(locale)
+  const { data, loading, error } = useExperienceData()
   const { settings } = useTheme()
   const [logs, setLogs] = useState<LogEntry[]>(
     TERMINAL_INITIAL_LOGS.map((content, i) => ({ id: i + 1, type: "info" as const, content })),
@@ -106,19 +124,17 @@ export function TerminalPanel({ isOpen, onCommandRef }: TerminalPanelProps) {
           setLogs((prev) => [...prev, { id: Date.now(), type: "info", content: line }])
         }
 
-        const sortedHistory = [...gitHistory].sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-        )
+        const experiences = data ?? []
 
-        for (const commit of sortedHistory) {
+        for (const exp of experiences) {
           await new Promise((r) => setTimeout(r, 800))
           setLogs((prev) => [
             ...prev,
             {
               id: Date.now(),
               type: "success",
-              content: `[${commit.date}] ${commit.company} - ${commit.position}`,
-              timestamp: commit.date,
+              content: `[${exp.period}] ${exp.company} - ${exp.role}`,
+              timestamp: exp.period,
             },
           ])
 
@@ -128,7 +144,7 @@ export function TerminalPanel({ isOpen, onCommandRef }: TerminalPanelProps) {
             {
               id: Date.now(),
               type: "info",
-              content: `  └─ ${commit.message}`,
+              content: `  └─ ${exp.projectOverview || exp.role}`,
             },
           ])
         }
@@ -151,7 +167,7 @@ export function TerminalPanel({ isOpen, onCommandRef }: TerminalPanelProps) {
         },
       ])
     },
-    [gitHistory],
+    [data],
   )
 
   useEffect(() => {

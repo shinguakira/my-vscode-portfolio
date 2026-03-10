@@ -1,23 +1,25 @@
 "use client"
 
+import type { Project } from "@shinguakira/portfolio-api-types"
 import type React from "react"
 import { useCallback, useMemo, useState } from "react"
 
-import { getExtensions } from "@/constants/portfolio-data"
-import type { Extension, FileItem, Tab } from "@/types"
+import type { FileItem, Tab } from "@/types"
+import { useProjectsData } from "./use-projects-data"
 
 export function useTabs(locale: string) {
-  const extensions = getExtensions(locale)
+  const { data: projects } = useProjectsData()
   const [tabs, setTabs] = useState<Tab[]>([])
   const [activeTab, setActiveTab] = useState<string | null>(null)
 
-  const activeExtension = useMemo<Extension | null>(() => {
-    if (activeTab?.startsWith("extensions/")) {
+  const activeExtension = useMemo<Project | null>(() => {
+    if (activeTab?.startsWith("extensions/") && projects) {
       const extId = activeTab.replace("extensions/", "")
-      return extensions.find((e) => e.id === extId) || null
+      const idx = Number(extId)
+      return projects[idx] ?? null
     }
     return null
-  }, [activeTab, extensions])
+  }, [activeTab, projects])
 
   const activeTabContent = tabs.find((tab) => tab.id === activeTab)
 
@@ -40,8 +42,10 @@ export function useTabs(locale: string) {
 
   const openExtension = useCallback(
     (extensionId: string) => {
-      const extension = extensions.find((ext) => ext.id === extensionId)
-      if (!extension) return
+      if (!projects) return
+      const idx = Number(extensionId)
+      const project = projects[idx]
+      if (!project) return
 
       const tabId = `extensions/${extensionId}`
 
@@ -49,8 +53,8 @@ export function useTabs(locale: string) {
         if (prev.find((tab) => tab.id === tabId)) return prev
         const newTab: Tab = {
           id: tabId,
-          name: extension.displayName,
-          icon: extension.icon,
+          name: project.title,
+          icon: "folder-code",
           content: "",
           isDirty: false,
         }
@@ -58,7 +62,7 @@ export function useTabs(locale: string) {
       })
       setActiveTab(tabId)
     },
-    [extensions],
+    [projects],
   )
 
   const closeTab = (tabId: string, e: React.MouseEvent) => {

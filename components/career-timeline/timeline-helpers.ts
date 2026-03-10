@@ -1,4 +1,4 @@
-import type { CareerProject } from "./career-timeline"
+import type { TimelineItem } from "./career-timeline"
 
 /* ─── Date helpers ─── */
 
@@ -42,7 +42,7 @@ export function monthsBetween(a: Date, b: Date) {
 
 /* ─── Range & overlap helpers ─── */
 
-export function getRange(items: CareerProject[]) {
+export function getRange(items: TimelineItem[]) {
   let minD = new Date()
   let maxD = new Date(0)
   for (const p of items) {
@@ -56,7 +56,7 @@ export function getRange(items: CareerProject[]) {
   return { minD, maxD }
 }
 
-export function findOverlaps(items: CareerProject[]) {
+export function findOverlaps(items: TimelineItem[]) {
   const map = new Map<string, string[]>()
   for (let i = 0; i < items.length; i++) {
     const a = items[i]
@@ -73,11 +73,11 @@ export function findOverlaps(items: CareerProject[]) {
   return map
 }
 
-export function packColumns(items: CareerProject[]) {
+export function packColumns(items: TimelineItem[]) {
   const sorted = [...items].sort(
     (a, b) => parseDate(a.startDate).getTime() - parseDate(b.startDate).getTime(),
   )
-  const cols: CareerProject[][] = []
+  const cols: TimelineItem[][] = []
   for (const p of sorted) {
     const pS = parseDate(p.startDate)
     let placed = false

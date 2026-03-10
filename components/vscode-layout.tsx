@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useMemo, useRef, useState } from "react"
 
 import { EditorArea } from "@/components/editor/editor-area"
 import { EmptyState } from "@/components/editor/empty-state"
@@ -16,10 +16,10 @@ import { SettingsPanel } from "@/components/vscode/settings-panel"
 import { StatusBar } from "@/components/vscode/status-bar"
 import { TabBar } from "@/components/vscode/tab-bar"
 import { TitleBar } from "@/components/vscode/title-bar"
-import { getFileTree } from "@/constants/portfolio-data"
 import { useLocale } from "@/contexts/locale-context"
 import { ThemeProvider, useTheme } from "@/contexts/theme-context"
 import { useFileSearch } from "@/hooks/use-file-search"
+import { useProjectsData } from "@/hooks/use-projects-data"
 import { useResponsive } from "@/hooks/use-responsive"
 import { useSettings } from "@/hooks/use-settings"
 import { useTabs } from "@/hooks/use-tabs"
@@ -44,7 +44,28 @@ function VSCodeLayoutInner({
 }) {
   const locale = useLocale()
   const { settings, bgMain, bgActivityBar, accentColor } = useTheme()
-  const fileTree = getFileTree(locale)
+  const { data: projects } = useProjectsData()
+
+  const fileTree = useMemo<FileItem[]>(() => {
+    const sections: FileItem[] = [
+      { name: "about.md", type: "file", icon: "markdown", content: "# About\n\nPortfolio" },
+      { name: "skills.md", type: "file", icon: "markdown", content: "# Skills" },
+      { name: "faq.md", type: "file", icon: "markdown", content: "# FAQ" },
+      { name: "contact.md", type: "file", icon: "markdown", content: "# Contact" },
+      { name: "experience.md", type: "file", icon: "markdown", content: "# Experience" },
+      { name: "strong-points.md", type: "file", icon: "markdown", content: "# Strong Points" },
+    ]
+    const projectFiles: FileItem[] = (projects ?? []).map((p) => ({
+      name: `${p.title.toLowerCase().replace(/\s+/g, "-")}.md`,
+      type: "file" as const,
+      icon: "markdown",
+      content: `# ${p.title}\n\n${p.description}\n\n## Technologies\n${p.technologies.join(", ")}`,
+    }))
+    return [
+      { name: "about", type: "folder", icon: "folder", children: sections },
+      { name: "projects", type: "folder", icon: "folder", children: projectFiles },
+    ]
+  }, [projects])
 
   const {
     tabs,
@@ -73,7 +94,7 @@ function VSCodeLayoutInner({
 
   const [openFolders, setOpenFolders] = useState<string[]>(["about", "projects"])
   const [settingsOpen, setSettingsOpen] = useState(false)
-  const [previewMode, setPreviewMode] = useState(false)
+  const [previewMode, setPreviewMode] = useState(true)
   const [searchMode, setSearchMode] = useState(false)
   const [historyMode, setHistoryMode] = useState(false)
   const [diffMode, setDiffMode] = useState(false)
