@@ -1,6 +1,7 @@
 import type {
   ChangelogResponse,
   ContactResponse,
+  EducationResponse,
   ExperienceResponse,
   FaqResponse,
   LinksResponse,
@@ -38,3 +39,6 @@ export const fetchChangelog = (locale: string, signal?: AbortSignal) =>
 
 export const fetchLinks = (signal?: AbortSignal) =>
   fetchPortfolioApi<LinksResponse>("links", undefined, signal)
+
+export const fetchEducation = (locale: string, signal?: AbortSignal) =>
+  fetchPortfolioApi<EducationResponse>("education", locale, signal)

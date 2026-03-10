@@ -5,11 +5,14 @@ import { GraduationCap } from "lucide-react"
 import { useCallback, useMemo, useState } from "react"
 
 import { useLocale } from "@/contexts/locale-context"
+import { useEducationData } from "@/hooks/use-education-data"
 import { cn } from "@/lib/utils"
 
 import { DetailModal } from "./detail-modal"
 import {
   COL_W,
+  COL_W_OLD,
+  CUTOFF_YEAR,
   durationJa,
   findOverlaps,
   fmtShort,
@@ -90,11 +93,43 @@ function toTimelineItems(experiences: WorkExperience[]): TimelineItem[] {
   })
 }
 
-/* ─── Education data ─── */
+/* ─── Pre-2023 cutoff: items starting before 2023 get half height ─── */
 
-const educationData = {
-  ja: { degree: "情報工学学士", university: "○○大学", year: "2019年卒業" },
-  en: { degree: "B.S. in Computer Science", university: "XX University", year: "Graduated 2019" },
+const PX_HALF = PX / 2
+
+/** Compute pixel-per-month for a given date (half scale before CUTOFF_YEAR) */
+function pxForDate(d: Date): number {
+  return d.getFullYear() < CUTOFF_YEAR ? PX_HALF : PX
+}
+
+/** Compute cumulative pixel offset from minD to target, respecting the cutoff boundary */
+function pxOffset(minD: Date, target: Date): number {
+  const cutoff = new Date(CUTOFF_YEAR, 0)
+  if (target <= minD) return 0
+  if (target <= cutoff && minD < cutoff) {
+    return monthsBetween(minD, target) * PX_HALF
+  }
+  if (minD >= cutoff) {
+    return monthsBetween(minD, target) * PX
+  }
+  // spans the boundary
+  const before = monthsBetween(minD, cutoff) * PX_HALF
+  const after = monthsBetween(cutoff, target) * PX
+  return before + after
+}
+
+function totalPxHeight(minD: Date, maxD: Date): number {
+  return pxOffset(minD, maxD)
+}
+
+/** Column width depends on whether the item starts before CUTOFF_YEAR */
+function colWidth(startDate: string): number {
+  const d = parseDate(startDate)
+  return d.getFullYear() < CUTOFF_YEAR ? COL_W_OLD : COL_W
+}
+
+function yearPxOffset(minD: Date, year: number): number {
+  return pxOffset(minD, new Date(year, 0))
 }
 
 /* ─── Main exported component ─── */
@@ -107,19 +142,19 @@ export function CareerTimeline({
   variant?: TimelineVariant
 }) {
   const locale = useLocale()
-  const education = locale === "en" ? educationData.en : educationData.ja
+  const { data: educationList } = useEducationData()
   const s = variantStyles[variant]
 
   const projects = useMemo(() => toTimelineItems(experiences), [experiences])
   const { minD, maxD } = useMemo(() => getRange(projects), [projects])
-  const totalH = useMemo(() => monthsBetween(minD, maxD) * PX, [minD, maxD])
+  const totalH = useMemo(() => totalPxHeight(minD, maxD), [minD, maxD])
   const columns = useMemo(() => packColumns(projects), [projects])
   const overlaps = useMemo(() => findOverlaps(projects), [projects])
 
   const years = useMemo(() => {
     const arr: { year: number; top: number }[] = []
     for (let y = minD.getFullYear(); y <= maxD.getFullYear(); y++) {
-      arr.push({ year: y, top: monthsBetween(minD, new Date(y, 0)) * PX })
+      arr.push({ year: y, top: yearPxOffset(minD, y) })
     }
     return arr
   }, [minD, maxD])
@@ -189,9 +224,10 @@ export function CareerTimeline({
               {projects.map((p) => {
                 const start = parseDate(p.startDate)
                 const end = parseDate(p.endDate)
-                const top = monthsBetween(minD, start) * PX
-                const height = Math.max(monthsBetween(start, end) * PX, 28)
+                const top = pxOffset(minD, start)
+                const height = Math.max(pxOffset(start, end), 28)
                 const col = columns.map.get(p.id) ?? 0
+                const w = colWidth(p.startDate)
                 const lit = isLit(p.id)
                 const active = hovered === p.id
                 const isParallel = hovered && hovered !== p.id && lit
@@ -208,7 +244,7 @@ export function CareerTimeline({
                       top,
                       height,
                       left: col * (COL_W + GAP),
-                      width: COL_W,
+                      width: w,
                     }}
                     onMouseEnter={() => setHovered(p.id)}
                     onMouseLeave={() => setHovered(null)}
@@ -287,29 +323,38 @@ export function CareerTimeline({
           </div>
         </div>
 
-        <div className={s.educationBg}>
-          <div className="flex items-center gap-4">
-            {variant !== "professional" && (
-              <div
-                className={cn(
-                  "w-10 h-10 rounded-lg flex items-center justify-center shrink-0",
-                  s.educationGrad || "bg-blue-600/20",
+        {educationList && educationList.length > 0 && (
+          <div className={s.educationBg}>
+            {educationList.map((edu, i) => (
+              <div key={i} className={cn("flex items-center gap-4", i > 0 && "mt-4")}>
+                {variant !== "professional" && i === 0 && (
+                  <div
+                    className={cn(
+                      "w-10 h-10 rounded-lg flex items-center justify-center shrink-0",
+                      s.educationGrad || "bg-blue-600/20",
+                    )}
+                  >
+                    <GraduationCap className="w-5 h-5 text-blue-400" />
+                  </div>
                 )}
-              >
-                <GraduationCap className="w-5 h-5 text-blue-400" />
+                {variant !== "professional" && i > 0 && (
+                  <div className="w-10 shrink-0" />
+                )}
+                {variant === "professional" && (
+                  <GraduationCap className="w-5 h-5 text-gray-500 shrink-0" />
+                )}
+                <div>
+                  <h3 className={s.educationTitle}>
+                    {edu.department}
+                  </h3>
+                  <p className={s.educationSub}>
+                    {edu.school} / {edu.startYear} - {edu.endYear}
+                  </p>
+                </div>
               </div>
-            )}
-            {variant === "professional" && (
-              <GraduationCap className="w-5 h-5 text-gray-500 shrink-0" />
-            )}
-            <div>
-              <h3 className={s.educationTitle}>{education.degree}</h3>
-              <p className={s.educationSub}>
-                {education.university} / {education.year}
-              </p>
-            </div>
+            ))}
           </div>
-        </div>
+        )}
       </div>
 
       <DetailModal

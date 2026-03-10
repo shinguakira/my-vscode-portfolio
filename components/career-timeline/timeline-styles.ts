@@ -3,7 +3,7 @@ export const variantStyles = {
     wrapper: "min-h-full bg-black relative overflow-hidden",
     bg1: "absolute top-1/3 right-0 w-[500px] h-[500px] bg-violet-500/10 rounded-full blur-3xl",
     bg2: "absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-3xl",
-    inner: "relative max-w-5xl mx-auto px-8 short:px-4 py-20 short:py-6",
+    inner: "relative max-w-7xl mx-auto px-4 short:px-2 py-20 short:py-6",
     title:
       "text-8xl short:text-3xl font-black mb-6 short:mb-2 text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-indigo-400 to-blue-400 text-center",
     subtitle: "text-2xl short:text-sm text-gray-400 font-light text-center mb-16 short:mb-4",
@@ -42,7 +42,7 @@ export const variantStyles = {
     wrapper: "min-h-full bg-white",
     bg1: "",
     bg2: "",
-    inner: "max-w-4xl mx-auto px-8 short:px-4 py-24 short:py-8",
+    inner: "max-w-7xl mx-auto px-4 short:px-2 py-24 short:py-8",
     title: "text-5xl short:text-2xl font-serif font-bold text-gray-900 mb-3 short:mb-1 text-left",
     subtitle:
       "text-xl short:text-sm text-gray-600 text-left mb-16 short:mb-4 pb-8 short:pb-4 border-b border-gray-200",
@@ -80,7 +80,7 @@ export const variantStyles = {
     wrapper: "min-h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950",
     bg1: "",
     bg2: "",
-    inner: "max-w-5xl mx-auto px-8 short:px-4 py-16 short:py-6",
+    inner: "max-w-7xl mx-auto px-4 short:px-2 py-16 short:py-6",
     title:
       "text-5xl short:text-2xl font-bold mb-4 short:mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent text-center",
     subtitle: "text-xl short:text-sm text-slate-400 text-center mb-12 short:mb-4",

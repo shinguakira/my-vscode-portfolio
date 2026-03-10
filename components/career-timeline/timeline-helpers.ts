@@ -99,6 +99,8 @@ export function packColumns(items: TimelineItem[]) {
 /* ─── Layout constants ─── */
 
 export const PX = 16
-export const COL_W = 164
+export const COL_W = 328
+export const COL_W_OLD = Math.round(COL_W * 0.7)
 export const GAP = 6
 export const RULER_W = 48
+export const CUTOFF_YEAR = 2023
