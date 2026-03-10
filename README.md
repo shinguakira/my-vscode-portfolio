@@ -6,6 +6,8 @@
 
 A portfolio website that replicates the Visual Studio Code editor interface. Browse portfolio sections as if they were files in an IDE — complete with tabs, sidebar, terminal, settings panel, and theme customization.
 
+> **Note:** This project is based on [shinguakira/vscode-portfolio](https://github.com/shinguakira/vscode-portfolio). The version described in the Qiita articles refers to that original repository.
+
 ## Features
 
 - **VS Code UI**: Faithful recreation of VS Code with title bar, activity bar, sidebar, tabs, terminal, and status bar

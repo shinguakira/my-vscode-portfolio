@@ -5,7 +5,11 @@
       "Bash(npm run lint:fix)",
       "Bash(npm run check-themes)",
       "Bash(npx playwright test e2e/features.spec.ts --update-snapshots)",
-      "Read(//e/workspace/**)"
+      "Read(//e/workspace/**)",
+      "Bash(grep -r \"fetch\\\\|axios\\\\|request\" e:/workspace/my-vscode-portfolio --include=\"*.tsx\" --include=\"*.ts\" ! -path \"*/node_modules/*\" ! -path \"*/.next/*\")",
+      "WebFetch(domain:portfolio-api-ten-delta.vercel.app)",
+      "Bash(ls e:/workspace/my-vscode-portfolio/hooks/use-*)",
+      "Bash(node -e \":*)"
     ]
   }
 }
