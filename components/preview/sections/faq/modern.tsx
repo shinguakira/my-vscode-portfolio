@@ -46,11 +46,6 @@ export function ModernFaq() {
                         {item.category}
                       </span>
                     )}
-                    {item.size && (
-                      <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium bg-slate-700/50 text-slate-400 border border-slate-600/30">
-                        {item.size}
-                      </span>
-                    )}
                   </div>
                   <p className="text-slate-400 leading-relaxed">{item.answer}</p>
                 </div>

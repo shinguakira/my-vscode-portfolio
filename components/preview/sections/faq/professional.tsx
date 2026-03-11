@@ -44,11 +44,6 @@ export function ProfessionalFaq() {
                   <div key={i} className="grid md:grid-cols-12 gap-4">
                     <div className="md:col-span-5">
                       <p className="font-medium text-gray-900">{item.question}</p>
-                      {item.size && (
-                        <span className="inline-flex items-center mt-1 rounded px-1.5 py-0.5 text-[10px] font-medium bg-gray-100 text-gray-500 border border-gray-200">
-                          {item.size}
-                        </span>
-                      )}
                     </div>
                     <div className="md:col-span-7">
                       <p className="text-gray-600 leading-relaxed text-sm">{item.answer}</p>

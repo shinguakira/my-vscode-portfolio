@@ -48,11 +48,6 @@ export function InnovativeFaq() {
                           {item.category}
                         </span>
                       )}
-                      {item.size && (
-                        <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium bg-gray-800 text-gray-400 border border-gray-700 whitespace-nowrap">
-                          {item.size}
-                        </span>
-                      )}
                     </div>
                     <p className="text-gray-400 leading-relaxed short:text-sm">{item.answer}</p>
                   </div>

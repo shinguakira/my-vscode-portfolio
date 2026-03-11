@@ -33,13 +33,6 @@ export function ProfessionalStrongPoints() {
               {strongPoints.map((item, i) => (
                 <div key={i} className="border-l-2 border-gray-900 pl-6">
                   <h3 className="text-lg font-bold text-gray-900 mb-2">{item.question}</h3>
-                  {item.size && (
-                    <div className="mb-2 inline-block">
-                      <span className="rounded-full border border-gray-900 bg-gray-900 px-3 py-1 text-xs font-bold text-white">
-                        Level: {item.size}
-                      </span>
-                    </div>
-                  )}
                   <p className="text-gray-600 leading-relaxed text-sm">{item.answer}</p>
                 </div>
               ))}

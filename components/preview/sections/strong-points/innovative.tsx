@@ -58,13 +58,6 @@ export function InnovativeStrongPoints() {
                   >
                     {item.question}
                   </h3>
-                  {item.size && (
-                    <div className="mb-4 short:mb-1 inline-block">
-                      <span className={`rounded-full bg-gradient-to-r ${gradient} px-4 py-1.5 text-xs font-bold text-white shadow-md`}>
-                        Level: {item.size}
-                      </span>
-                    </div>
-                  )}
                   <p className="text-xl short:text-sm text-gray-400">{item.answer}</p>
                 </div>
               </div>

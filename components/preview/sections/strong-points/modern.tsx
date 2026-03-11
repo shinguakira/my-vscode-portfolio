@@ -33,13 +33,6 @@ export function ModernStrongPoints() {
               <h3 className="text-2xl short:text-base font-bold mb-3 short:mb-1 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
                 {item.question}
               </h3>
-              {item.size && (
-                <div className="mb-3 short:mb-1 inline-block">
-                  <span className="rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 px-4 py-1.5 text-xs font-bold text-white shadow-md">
-                    Level: {item.size}
-                  </span>
-                </div>
-              )}
               <p className="text-slate-400 leading-relaxed short:text-sm">{item.answer}</p>
             </div>
           ))}
