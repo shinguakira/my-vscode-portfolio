@@ -7,9 +7,10 @@ export function getPreviewType(name: string) {
   if (name.includes("profile") || name.includes("about")) return "profile"
   if (name.includes("experience")) return "experience"
   if (name.includes("README")) return "readme"
-  if (name.includes("featured") || name.includes("projects")) return "projects"
+  if (name.includes("projects")) return "projects"
   if (name.includes("skills")) return "skills"
   if (name.includes("contact")) return "contact"
+  if (name.includes("schedule")) return "schedule"
   return "default"
 }
 

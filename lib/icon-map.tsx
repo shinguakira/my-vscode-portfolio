@@ -1,7 +1,10 @@
 import {
   BookOpen,
   Braces,
+  Calendar,
   Code2,
+  FileCode,
+  FileJson,
   FileText,
   Folder,
   HelpCircle,
@@ -35,6 +38,10 @@ const iconComponents: Record<
   "book-open": BookOpen,
   mail: Mail,
   settings: Settings,
+  typescript: FileCode,
+  javascript: FileCode,
+  json: FileJson,
+  calendar: Calendar,
 }
 
 export function IconFromKey({

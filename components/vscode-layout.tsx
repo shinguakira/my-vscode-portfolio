@@ -19,6 +19,7 @@ import { TitleBar } from "@/components/vscode/title-bar"
 import { useLocale } from "@/contexts/locale-context"
 import { ThemeProvider, useTheme } from "@/contexts/theme-context"
 import { useFileSearch } from "@/hooks/use-file-search"
+import { useProfileData } from "@/hooks/use-profile-data"
 import { useProjectsData } from "@/hooks/use-projects-data"
 import { useResponsive } from "@/hooks/use-responsive"
 import { useSettings } from "@/hooks/use-settings"
@@ -45,27 +46,39 @@ function VSCodeLayoutInner({
   const locale = useLocale()
   const { settings, bgMain, bgActivityBar, accentColor } = useTheme()
   const { data: projects } = useProjectsData()
+  const { data: profile } = useProfileData()
 
   const fileTree = useMemo<FileItem[]>(() => {
+    const aboutContent = profile
+      ? `// Profile\nexport const profile = {\n  name: "${profile.name}",\n  title: "${profile.title}",\n  location: "${profile.location}",\n  summary: "${profile.summary}",\n  bio: "${profile.bio}",\n}`
+      : "// Loading profile..."
+    const projectsContent = (projects ?? [])
+      .map(
+        (p) =>
+          `  {\n    title: "${p.title}",\n    description: "${p.description}",\n    technologies: [${p.technologies.map((t) => `"${t}"`).join(", ")}],\n  }`,
+      )
+      .join(",\n")
     const sections: FileItem[] = [
-      { name: "about.md", type: "file", icon: "markdown", content: "# About\n\nPortfolio" },
-      { name: "skills.md", type: "file", icon: "markdown", content: "# Skills" },
-      { name: "faq.md", type: "file", icon: "markdown", content: "# FAQ" },
-      { name: "contact.md", type: "file", icon: "markdown", content: "# Contact" },
-      { name: "experience.md", type: "file", icon: "markdown", content: "# Experience" },
-      { name: "strong-points.md", type: "file", icon: "markdown", content: "# Strong Points" },
+      { name: "about.ts", type: "file", icon: "typescript", content: aboutContent },
+      { name: "skills.json", type: "file", icon: "json", content: "{\n  \"skills\": []\n}" },
+      { name: "faq.ts", type: "file", icon: "typescript", content: "// FAQ" },
+      { name: "contact.json", type: "file", icon: "json", content: "{\n  \"contact\": {}\n}" },
+      { name: "experience.ts", type: "file", icon: "typescript", content: "// Work Experience" },
+      { name: "strong-points.js", type: "file", icon: "javascript", content: "// Strong Points" },
     ]
-    const projectFiles: FileItem[] = (projects ?? []).map((p) => ({
-      name: `${p.title.toLowerCase().replace(/\s+/g, "-")}.md`,
-      type: "file" as const,
-      icon: "markdown",
-      content: `# ${p.title}\n\n${p.description}\n\n## Technologies\n${p.technologies.join(", ")}`,
-    }))
+    const projectsFolder: FileItem = {
+      name: "projects",
+      type: "folder",
+      icon: "folder",
+      children: [
+        { name: "projects.ts", type: "file", icon: "typescript", content: `export const projects = [\n${projectsContent}\n]` },
+      ],
+    }
     return [
-      { name: "about", type: "folder", icon: "folder", children: sections },
-      { name: "projects", type: "folder", icon: "folder", children: projectFiles },
+      { name: "src", type: "folder", icon: "folder", children: [...sections, projectsFolder] },
+      { name: "schedule.exe", type: "file", icon: "calendar", content: "// Schedule" },
     ]
-  }, [projects])
+  }, [projects, profile])
 
   const {
     tabs,
@@ -92,7 +105,7 @@ function VSCodeLayoutInner({
     handleTerminalResize,
   } = useResponsive()
 
-  const [openFolders, setOpenFolders] = useState<string[]>(["about", "projects"])
+  const [openFolders, setOpenFolders] = useState<string[]>(["src"])
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [previewMode, setPreviewMode] = useState(true)
   const [searchMode, setSearchMode] = useState(false)

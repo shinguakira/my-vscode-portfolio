@@ -11,13 +11,22 @@ export function useFileSearch(openFile: (file: FileItem, path: string[]) => void
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
 
   const fileTree = useMemo<FileItem[]>(() => {
-    if (!projects) return []
-    return projects.map((p) => ({
-      name: `${p.title.toLowerCase().replace(/\s+/g, "-")}.md`,
-      type: "file" as const,
-      icon: "markdown",
-      content: `# ${p.title}\n\n${p.description}\n\n## Technologies\n${p.technologies.join(", ")}`,
-    }))
+    const projectsContent = (projects ?? [])
+      .map(
+        (p) =>
+          `  { title: "${p.title}", description: "${p.description}", technologies: [${p.technologies.map((t) => `"${t}"`).join(", ")}] }`,
+      )
+      .join(",\n")
+    return [
+      {
+        name: "src",
+        type: "folder" as const,
+        icon: "folder",
+        children: [
+          { name: "projects.ts", type: "file" as const, icon: "typescript", content: `export const projects = [\n${projectsContent}\n]` },
+        ],
+      },
+    ]
   }, [projects])
 
   const searchInFiles = (query: string) => {
