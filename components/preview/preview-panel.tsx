@@ -21,6 +21,9 @@ import { ProfessionalProjects } from "./sections/projects/professional"
 import { InnovativeReadme } from "./sections/readme/innovative"
 import { ModernReadme } from "./sections/readme/modern"
 import { ProfessionalReadme } from "./sections/readme/professional"
+import { InnovativeSchedule } from "./sections/schedule/innovative"
+import { ModernSchedule } from "./sections/schedule/modern"
+import { ProfessionalSchedule } from "./sections/schedule/professional"
 import { InnovativeSkills } from "./sections/skills/innovative"
 import { ModernSkills } from "./sections/skills/modern"
 import { ProfessionalSkills } from "./sections/skills/professional"
@@ -57,6 +60,11 @@ const SECTION_MAP: Record<string, Record<string, React.ComponentType>> = {
     professional: ProfessionalExperience,
   },
   readme: { modern: ModernReadme, innovative: InnovativeReadme, professional: ProfessionalReadme },
+  schedule: {
+    modern: ModernSchedule,
+    innovative: InnovativeSchedule,
+    professional: ProfessionalSchedule,
+  },
 }
 
 interface PreviewPanelProps {
