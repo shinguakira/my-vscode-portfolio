@@ -113,7 +113,7 @@ export function TutorialOverlay({
           // Then open file and enable preview with sufficient delay
           setTimeout(() => {
             if (onOpenFile) {
-              onOpenFile("profile.md")
+              onOpenFile("about.ts")
             }
             // Wait for file to open before enabling preview
             setTimeout(() => {
