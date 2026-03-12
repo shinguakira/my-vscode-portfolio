@@ -6,29 +6,6 @@ export interface FileItem {
   children?: FileItem[]
 }
 
-export interface GitCommit {
-  hash: string
-  date: string
-  author: string
-  message: string
-  company: string
-  position: string
-  changes: string[]
-}
-
-export interface ChangelogChange {
-  type: "added" | "improved" | "fixed" | "removed"
-  description: string
-}
-
-export interface ChangelogEntry {
-  version: string
-  date: string
-  type: "major" | "minor" | "patch"
-  title: string
-  changes: ChangelogChange[]
-}
-
 export interface Tab {
   id: string
   name: string
@@ -82,20 +59,3 @@ export interface ArticlesData {
   articles: Article[]
 }
 
-export interface Extension {
-  id: string
-  name: string
-  displayName: string
-  description: string
-  version: string
-  publisher: string
-  icon: string
-  categories: string[]
-  tags: string[]
-  downloads: number
-  rating: number
-  repository?: string
-  homepage?: string
-  features: string[]
-  screenshots?: string[]
-}
