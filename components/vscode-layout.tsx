@@ -63,6 +63,7 @@ function VSCodeLayoutInner({
       { name: "contact.json", type: "file", icon: "json", content: '{\n  "contact": {}\n}' },
       { name: "experience.ts", type: "file", icon: "typescript", content: "// Work Experience" },
       { name: "strong-points.js", type: "file", icon: "javascript", content: "// Strong Points" },
+      { name: "certifications.ts", type: "file", icon: "typescript", content: "// Certifications" },
     ]
     const projectsFolder: FileItem = {
       name: "projects",

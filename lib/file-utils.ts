@@ -12,6 +12,7 @@ export function getPreviewType(name: string) {
   if (name.includes("contact")) return "contact"
   if (name.includes("schedule")) return "schedule"
   if (name.includes("article")) return "articles"
+  if (name.includes("certification")) return "certifications"
   if (name.includes("notification")) return "notifications"
   return "default"
 }

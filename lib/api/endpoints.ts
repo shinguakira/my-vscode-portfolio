@@ -1,4 +1,5 @@
 import type {
+  CertificationsResponse,
   ChangelogResponse,
   ContactResponse,
   EducationResponse,
@@ -43,6 +44,9 @@ export const fetchEducation = (locale: string, signal?: AbortSignal) =>
 
 export const fetchNotifications = (locale: string, signal?: AbortSignal) =>
   fetchPortfolioApi<Notification[]>("notifications", locale, signal)
+
+export const fetchCertifications = (locale: string, signal?: AbortSignal) =>
+  fetchPortfolioApi<CertificationsResponse>("certifications", locale, signal)
 
 export const fetchArticles = (signal?: AbortSignal) =>
   fetchPortfolioApi<ArticlesData>("articles", undefined, signal)
