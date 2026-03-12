@@ -11,9 +11,10 @@ interface NotificationPopupProps {
   open: boolean
   onClose: () => void
   onOpenFile?: () => void
+  position?: "top" | "bottom"
 }
 
-export function NotificationPopup({ open, onClose, onOpenFile }: NotificationPopupProps) {
+export function NotificationPopup({ open, onClose, onOpenFile, position = "bottom" }: NotificationPopupProps) {
   const locale = useLocale()
   const { bgSidebar, textPrimary, textSecondary, textMuted, accentColor } = useTheme()
   const { data: notifications, loading } = useNotificationsData()
@@ -37,7 +38,9 @@ export function NotificationPopup({ open, onClose, onOpenFile }: NotificationPop
   return (
     <div
       ref={ref}
-      className="absolute bottom-full right-0 mb-1 w-80 max-h-96 rounded-md shadow-2xl border border-white/10 overflow-hidden z-50"
+      className={`absolute right-0 w-80 max-h-96 rounded-md shadow-2xl border border-white/10 overflow-hidden z-50 ${
+        position === "top" ? "top-full mt-1" : "bottom-full mb-1"
+      }`}
       style={{ backgroundColor: bgSidebar }}
     >
       <div className="flex items-center justify-between px-3 py-2 border-b border-white/10">
@@ -74,8 +77,11 @@ export function NotificationPopup({ open, onClose, onOpenFile }: NotificationPop
                   <p className="text-xs font-medium leading-snug mb-0.5" style={{ color: textPrimary }}>
                     {item.title}
                   </p>
-                  <p className="text-[11px] leading-relaxed mb-1" style={{ color: textSecondary }}>
-                    {item.content.length > 80 ? `${item.content.slice(0, 80)}...` : item.content}
+                  <p
+                    className="text-[11px] leading-relaxed mb-1 line-clamp-2"
+                    style={{ color: textSecondary }}
+                  >
+                    {item.content}
                   </p>
                   <div className="flex items-center gap-1">
                     <Calendar className="w-3 h-3" style={{ color: textMuted }} />

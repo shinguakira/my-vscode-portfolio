@@ -234,6 +234,7 @@ function VSCodeLayoutInner({
           handleSearchChange={handleSearchChange}
           setSearchMode={setSearchMode}
           onHelpClick={() => tutorialRestartRef.current?.()}
+          onOpenNotifications={() => handleTutorialOpenFile("notifications.json")}
         />
 
         <div className="flex flex-1 overflow-hidden">
@@ -356,11 +357,7 @@ function VSCodeLayoutInner({
           </div>
         </div>
 
-        <StatusBar
-          terminalOpen={terminalOpen}
-          setTerminalOpen={setTerminalOpen}
-          onOpenNotifications={() => handleTutorialOpenFile("notifications.json")}
-        />
+        <StatusBar terminalOpen={terminalOpen} setTerminalOpen={setTerminalOpen} />
 
         {settingsOpen && (
           <SettingsPanel onSave={saveSettings} onClose={() => setSettingsOpen(false)} />

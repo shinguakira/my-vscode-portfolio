@@ -1,12 +1,16 @@
 "use client"
 
-import { FileText, Globe, HelpCircle, PanelBottom, Search } from "lucide-react"
+import { Bell, FileText, Globe, HelpCircle, PanelBottom, Search } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 import type React from "react"
+import { useState } from "react"
 
 import { useLocale } from "@/contexts/locale-context"
 import { useTheme } from "@/contexts/theme-context"
+import { useNotificationsData } from "@/hooks/use-notifications-data"
 import { adjustBrightness } from "@/lib/color-utils"
+
+import { NotificationPopup } from "./notification-popup"
 
 interface TitleBarProps {
   terminalOpen: boolean
@@ -15,6 +19,7 @@ interface TitleBarProps {
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   setSearchMode: (mode: boolean) => void
   onHelpClick?: () => void
+  onOpenNotifications?: () => void
 }
 
 export function TitleBar({
@@ -24,9 +29,13 @@ export function TitleBar({
   handleSearchChange,
   setSearchMode,
   onHelpClick,
+  onOpenNotifications,
 }: TitleBarProps) {
   const locale = useLocale()
   const { accentColor, bgMain, bgTitleBar, textPrimary, textSecondary } = useTheme()
+  const [bellOpen, setBellOpen] = useState(false)
+  const { data: notifications } = useNotificationsData()
+  const hasNotifications = notifications && notifications.length > 0
   return (
     <div
       className="h-6 sm:h-7 md:h-9 flex items-center justify-between px-1 sm:px-2 md:px-4 text-[9px] sm:text-[10px] md:text-[13px] border-b shrink-0"
@@ -99,8 +108,30 @@ export function TitleBar({
         </div>
       </div>
 
-      {/* 右側: 言語切替 + ウィンドウ操作ボタン風 */}
+      {/* 右側: 通知 + 言語切替 + ウィンドウ操作ボタン風 */}
       <div className="flex items-center justify-end gap-1 sm:gap-2 md:gap-4">
+        <div className="relative">
+          <button
+            onClick={() => setBellOpen((v) => !v)}
+            className="p-0.5 sm:p-1 rounded hover:bg-white/10 transition-colors shrink-0 relative"
+            title={locale === "en" ? "Notifications" : "お知らせ"}
+            style={{ color: textSecondary }}
+          >
+            <Bell className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4" />
+            {hasNotifications && (
+              <span
+                className="absolute top-0 right-0 w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full border border-current"
+                style={{ backgroundColor: accentColor, borderColor: bgTitleBar }}
+              />
+            )}
+          </button>
+          <NotificationPopup
+            open={bellOpen}
+            onClose={() => setBellOpen(false)}
+            onOpenFile={onOpenNotifications}
+            position="top"
+          />
+        </div>
         <LanguageToggle />
         <div className="hidden lg:flex items-center gap-3">
           <div className="p-1 opacity-50">
