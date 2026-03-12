@@ -4,6 +4,9 @@ import { LandscapePrompt } from "@/components/landscape-prompt"
 import { InnovativeArticles } from "@/components/preview/sections/articles/innovative"
 import { ModernArticles } from "@/components/preview/sections/articles/modern"
 import { ProfessionalArticles } from "@/components/preview/sections/articles/professional"
+import { InnovativeCertifications } from "@/components/preview/sections/certifications/innovative"
+import { ModernCertifications } from "@/components/preview/sections/certifications/modern"
+import { ProfessionalCertifications } from "@/components/preview/sections/certifications/professional"
 import { InnovativeContact } from "@/components/preview/sections/contact/innovative"
 import { ModernContact } from "@/components/preview/sections/contact/modern"
 import { ProfessionalContact } from "@/components/preview/sections/contact/professional"
@@ -42,6 +45,7 @@ const SECTIONS = [
   "strong-points",
   "faq",
   "experience",
+  "certifications",
   "schedule",
   "articles",
   "notifications",
@@ -75,6 +79,11 @@ const SECTION_MAP: Record<string, Record<string, React.ComponentType>> = {
     modern: ModernExperience,
     innovative: InnovativeExperience,
     professional: ProfessionalExperience,
+  },
+  certifications: {
+    modern: ModernCertifications,
+    innovative: InnovativeCertifications,
+    professional: ProfessionalCertifications,
   },
   schedule: {
     modern: ModernSchedule,

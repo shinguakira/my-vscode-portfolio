@@ -6,6 +6,9 @@ import type { PreviewTheme } from "@/types"
 import { InnovativeArticles } from "./sections/articles/innovative"
 import { ModernArticles } from "./sections/articles/modern"
 import { ProfessionalArticles } from "./sections/articles/professional"
+import { InnovativeCertifications } from "./sections/certifications/innovative"
+import { ModernCertifications } from "./sections/certifications/modern"
+import { ProfessionalCertifications } from "./sections/certifications/professional"
 import { InnovativeContact } from "./sections/contact/innovative"
 import { ModernContact } from "./sections/contact/modern"
 import { ProfessionalContact } from "./sections/contact/professional"
@@ -75,6 +78,11 @@ const SECTION_MAP: Record<string, Record<string, React.ComponentType>> = {
     modern: ModernArticles,
     innovative: InnovativeArticles,
     professional: ProfessionalArticles,
+  },
+  certifications: {
+    modern: ModernCertifications,
+    innovative: InnovativeCertifications,
+    professional: ProfessionalCertifications,
   },
   notifications: {
     modern: ModernNotifications,
