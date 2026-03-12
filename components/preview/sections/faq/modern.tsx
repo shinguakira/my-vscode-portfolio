@@ -16,7 +16,7 @@ export function ModernFaq() {
 
   return (
     <div className="min-h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      <div className="max-w-4xl mx-auto px-4 short:px-2 py-16 short:py-6">
+      <div className="max-w-full mx-auto px-4 short:px-2 py-16 short:py-6">
         <div className="mb-12 short:mb-4 text-center">
           <h1 className="text-5xl short:text-2xl font-bold mb-4 short:mb-2 bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 bg-clip-text text-transparent">
             {locale === "en" ? "Frequently Asked Questions" : "よくある質問"}
@@ -54,7 +54,7 @@ export function ModernFaq() {
           ))}
         </div>
 
-        <div className="rounded-xl shadow-sm mt-12 short:mt-4 p-8 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur text-center">
+        <div className="rounded-xl shadow-sm mt-12 short:mt-4 p-5 short:p-2 bg-slate-900/50 border-slate-800 backdrop-blur text-center">
           <h3 className="text-xl short:text-base font-bold text-white mb-3 short:mb-1">
             {locale === "en" ? "If you have any other questions" : "その他ご質問がありましたら"}
           </h3>

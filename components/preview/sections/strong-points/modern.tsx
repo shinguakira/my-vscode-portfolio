@@ -28,7 +28,7 @@ export function ModernStrongPoints() {
           {strongPoints.map((item, i) => (
             <div
               key={i}
-              className="rounded-xl shadow-sm p-8 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur hover:border-slate-700 transition-all group"
+              className="rounded-xl shadow-sm p-5 short:p-2 bg-slate-900/50 border-slate-800 backdrop-blur hover:border-slate-700 transition-all group"
             >
               <h3 className="text-2xl short:text-base font-bold mb-3 short:mb-1 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
                 {item.question}

@@ -19,7 +19,7 @@ export function InnovativeFaq() {
         <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-yellow-500/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-4xl mx-auto px-4 short:px-2 py-20 short:py-6">
+      <div className="relative max-w-full mx-auto px-4 short:px-2 py-20 short:py-6">
         <div className="text-center mb-16 short:mb-4">
           <h1 className="text-8xl short:text-3xl font-black mb-6 short:mb-2 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-400 to-amber-400">
             FAQ
@@ -33,7 +33,7 @@ export function InnovativeFaq() {
           {faqItems.map((item, i) => (
             <div key={i} className="group relative">
               <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl blur opacity-20 group-hover:opacity-50 transition duration-500" />
-              <div className="relative bg-black border border-gray-800 rounded-2xl p-8 short:p-4">
+              <div className="relative bg-black border border-gray-800 rounded-2xl p-5 short:p-2">
                 <div className="flex items-start gap-6 short:gap-3">
                   <div className="text-4xl short:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400 shrink-0">
                     Q

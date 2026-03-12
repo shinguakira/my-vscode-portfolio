@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test"
 
-const SECTIONS = ["profile", "projects", "skills", "contact", "strong-points", "faq", "experience"]
+const SECTIONS = ["profile", "projects", "skills", "contact", "strong-points", "faq", "experience", "schedule", "articles", "notifications"]
 const THEMES = ["modern", "innovative", "professional"]
 const LOCALES = ["ja", "en"]
 

@@ -14,7 +14,7 @@ export function ModernProfile() {
 
   return (
     <div className="min-h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      <div className="max-w-5xl mx-auto px-4 short:px-2 py-16 short:py-6">
+      <div className="max-w-full mx-auto px-4 short:px-2 py-16 short:py-6">
         <div className="mb-20 short:mb-6 text-center">
           <div className="mb-8 short:mb-3 flex justify-center">
             <div className="relative">
@@ -43,7 +43,7 @@ export function ModernProfile() {
           </div>
         </div>
 
-        <div className="rounded-xl shadow-sm p-8 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur">
+        <div className="rounded-xl shadow-sm p-5 short:p-2 bg-slate-900/50 border-slate-800 backdrop-blur">
           <h3 className="text-2xl short:text-base font-bold mb-6 short:mb-2 text-white flex items-center gap-2">
             <span className="text-3xl short:text-lg">📝</span>
             {locale === "en" ? "About" : "自己紹介"}
@@ -52,7 +52,7 @@ export function ModernProfile() {
         </div>
 
         {profile.socialLinks.length > 0 && (
-          <div className="mt-8 short:mt-3 rounded-xl shadow-sm p-8 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur">
+          <div className="mt-8 short:mt-3 rounded-xl shadow-sm p-5 short:p-2 bg-slate-900/50 border-slate-800 backdrop-blur">
             <h3 className="text-2xl short:text-base font-bold mb-6 short:mb-2 text-white flex items-center gap-2">
               <span className="text-3xl short:text-lg">🔗</span>
               {locale === "en" ? "Links" : "リンク"}

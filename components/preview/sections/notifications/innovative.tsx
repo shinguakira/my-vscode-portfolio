@@ -25,7 +25,7 @@ export function InnovativeNotifications() {
         <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-fuchsia-500/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-4xl mx-auto px-4 short:px-2 py-20 short:py-6">
+      <div className="relative max-w-full mx-auto px-4 short:px-2 py-20 short:py-6">
         <div className="text-center mb-16 short:mb-4">
           <h1 className="text-8xl short:text-3xl font-black mb-6 short:mb-2 text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400">
             {t.title}
@@ -43,7 +43,7 @@ export function InnovativeNotifications() {
             {notifications.map((item, i) => (
               <div key={i} className="group relative">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-2xl blur opacity-20 group-hover:opacity-50 transition duration-500" />
-                <div className="relative bg-black border border-gray-800 rounded-2xl p-8 short:p-4">
+                <div className="relative bg-black border border-gray-800 rounded-2xl p-5 short:p-2">
                   <div className="flex items-start gap-6 short:gap-3">
                     <div className="w-14 h-14 short:w-10 short:h-10 rounded-2xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center shrink-0">
                       <Bell className="w-7 h-7 short:w-5 short:h-5 text-violet-400" />

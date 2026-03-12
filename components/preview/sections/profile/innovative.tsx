@@ -56,7 +56,7 @@ export function InnovativeProfile() {
           </div>
         </div>
 
-        <div className="rounded-xl p-8 short:p-3 bg-black/50 border border-gray-800">
+        <div className="rounded-xl p-5 short:p-2 bg-black/50 border border-gray-800">
           <p className="text-xl short:text-sm text-gray-300 leading-relaxed text-center">
             {profile.bio}
           </p>

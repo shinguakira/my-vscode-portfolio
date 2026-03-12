@@ -29,7 +29,7 @@ export function InnovativeContact() {
         <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-pink-500/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-4xl mx-auto px-4 short:px-2 py-20 short:py-6">
+      <div className="relative max-w-full mx-auto px-4 short:px-2 py-20 short:py-6">
         <div className="text-center mb-16 short:mb-6">
           <h1 className="text-8xl short:text-3xl font-black mb-6 short:mb-2 text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-400 to-purple-400">
             CONTACT
@@ -63,7 +63,7 @@ export function InnovativeContact() {
 
         <div className="group relative">
           <div className="absolute -inset-0.5 bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 rounded-2xl blur opacity-20" />
-          <div className="relative bg-black border border-gray-800 rounded-2xl p-8 short:p-4">
+          <div className="relative bg-black border border-gray-800 rounded-2xl p-5 short:p-2">
             {sent ? (
               <div className="text-center py-10">
                 <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-6" />

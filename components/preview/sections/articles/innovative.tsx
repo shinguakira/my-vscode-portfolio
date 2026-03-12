@@ -25,7 +25,7 @@ export function InnovativeArticles() {
         <div className="absolute bottom-1/3 right-0 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-4xl mx-auto px-4 short:px-2 py-20 short:py-6">
+      <div className="relative max-w-full mx-auto px-4 short:px-2 py-20 short:py-6">
         <div className="text-center mb-16 short:mb-4">
           <h1 className="text-8xl short:text-3xl font-black mb-6 short:mb-2 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400">
             {t.title}
@@ -47,7 +47,7 @@ export function InnovativeArticles() {
               className="block group relative"
             >
               <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-2xl blur opacity-0 group-hover:opacity-30 transition duration-500" />
-              <div className="relative bg-black border border-gray-800 rounded-2xl p-8 short:p-4 group-hover:border-emerald-500/50 transition-all">
+              <div className="relative bg-black border border-gray-800 rounded-2xl p-5 short:p-2 group-hover:border-emerald-500/50 transition-all">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-5 flex-1 min-w-0">
                     <div className="text-3xl short:text-xl font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-400 to-teal-600 shrink-0 w-10 text-center">

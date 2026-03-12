@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation"
 
 import { LandscapePrompt } from "@/components/landscape-prompt"
+import { InnovativeArticles } from "@/components/preview/sections/articles/innovative"
+import { ModernArticles } from "@/components/preview/sections/articles/modern"
+import { ProfessionalArticles } from "@/components/preview/sections/articles/professional"
 import { InnovativeContact } from "@/components/preview/sections/contact/innovative"
 import { ModernContact } from "@/components/preview/sections/contact/modern"
 import { ProfessionalContact } from "@/components/preview/sections/contact/professional"
@@ -10,12 +13,18 @@ import { ProfessionalExperience } from "@/components/preview/sections/experience
 import { InnovativeFaq } from "@/components/preview/sections/faq/innovative"
 import { ModernFaq } from "@/components/preview/sections/faq/modern"
 import { ProfessionalFaq } from "@/components/preview/sections/faq/professional"
+import { InnovativeNotifications } from "@/components/preview/sections/notifications/innovative"
+import { ModernNotifications } from "@/components/preview/sections/notifications/modern"
+import { ProfessionalNotifications } from "@/components/preview/sections/notifications/professional"
 import { InnovativeProfile } from "@/components/preview/sections/profile/innovative"
 import { ModernProfile } from "@/components/preview/sections/profile/modern"
 import { ProfessionalProfile } from "@/components/preview/sections/profile/professional"
 import { InnovativeProjects } from "@/components/preview/sections/projects/innovative"
 import { ModernProjects } from "@/components/preview/sections/projects/modern"
 import { ProfessionalProjects } from "@/components/preview/sections/projects/professional"
+import { InnovativeSchedule } from "@/components/preview/sections/schedule/innovative"
+import { ModernSchedule } from "@/components/preview/sections/schedule/modern"
+import { ProfessionalSchedule } from "@/components/preview/sections/schedule/professional"
 import { InnovativeSkills } from "@/components/preview/sections/skills/innovative"
 import { ModernSkills } from "@/components/preview/sections/skills/modern"
 import { ProfessionalSkills } from "@/components/preview/sections/skills/professional"
@@ -25,7 +34,7 @@ import { ProfessionalStrongPoints } from "@/components/preview/sections/strong-p
 import { DEFAULT_SETTINGS } from "@/constants/vscode-config"
 import { ThemeProvider } from "@/contexts/theme-context"
 
-const SECTIONS = ["profile", "projects", "skills", "contact", "strong-points", "faq", "experience"]
+const SECTIONS = ["profile", "projects", "skills", "contact", "strong-points", "faq", "experience", "schedule", "articles", "notifications"]
 const THEMES = ["modern", "innovative", "professional"]
 
 const SECTION_MAP: Record<string, Record<string, React.ComponentType>> = {
@@ -55,6 +64,21 @@ const SECTION_MAP: Record<string, Record<string, React.ComponentType>> = {
     modern: ModernExperience,
     innovative: InnovativeExperience,
     professional: ProfessionalExperience,
+  },
+  schedule: {
+    modern: ModernSchedule,
+    innovative: InnovativeSchedule,
+    professional: ProfessionalSchedule,
+  },
+  articles: {
+    modern: ModernArticles,
+    innovative: InnovativeArticles,
+    professional: ProfessionalArticles,
+  },
+  notifications: {
+    modern: ModernNotifications,
+    innovative: InnovativeNotifications,
+    professional: ProfessionalNotifications,
   },
 }
 
