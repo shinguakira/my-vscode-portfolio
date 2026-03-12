@@ -8,6 +8,7 @@ const SECTIONS = [
   "strong-points",
   "faq",
   "experience",
+  "certifications",
   "schedule",
   "articles",
   "notifications",
