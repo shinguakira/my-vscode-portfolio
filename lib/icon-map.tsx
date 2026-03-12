@@ -1,4 +1,5 @@
 import {
+  Bell,
   BookOpen,
   Braces,
   Calendar,
@@ -12,6 +13,7 @@ import {
   LayoutDashboard,
   Mail,
   MessageCircle,
+  Newspaper,
   Palette,
   Settings,
   ShoppingCart,
@@ -42,6 +44,8 @@ const iconComponents: Record<
   javascript: FileCode,
   json: FileJson,
   calendar: Calendar,
+  newspaper: Newspaper,
+  bell: Bell,
 }
 
 export function IconFromKey({

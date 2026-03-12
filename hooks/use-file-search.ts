@@ -26,6 +26,8 @@ export function useFileSearch(openFile: (file: FileItem, path: string[]) => void
           { name: "projects.ts", type: "file" as const, icon: "typescript", content: `export const projects = [\n${projectsContent}\n]` },
         ],
       },
+      { name: "articles.md", type: "file" as const, icon: "newspaper", content: "# Articles\n\nTechnical blog posts" },
+      { name: "notifications.json", type: "file" as const, icon: "bell", content: "{\n  \"notifications\": []\n}" },
     ]
   }, [projects])
 

@@ -76,6 +76,8 @@ function VSCodeLayoutInner({
     }
     return [
       { name: "src", type: "folder", icon: "folder", children: [...sections, projectsFolder] },
+      { name: "articles.md", type: "file", icon: "newspaper", content: "# Articles\n\nTechnical blog posts" },
+      { name: "notifications.json", type: "file", icon: "bell", content: "{\n  \"notifications\": []\n}" },
       { name: "schedule.exe", type: "file", icon: "calendar", content: "// Schedule" },
     ]
   }, [projects, profile])
@@ -354,7 +356,11 @@ function VSCodeLayoutInner({
           </div>
         </div>
 
-        <StatusBar terminalOpen={terminalOpen} setTerminalOpen={setTerminalOpen} />
+        <StatusBar
+          terminalOpen={terminalOpen}
+          setTerminalOpen={setTerminalOpen}
+          onOpenNotifications={() => handleTutorialOpenFile("notifications.json")}
+        />
 
         {settingsOpen && (
           <SettingsPanel onSave={saveSettings} onClose={() => setSettingsOpen(false)} />

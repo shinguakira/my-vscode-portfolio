@@ -3,6 +3,9 @@
 import { getPreviewType } from "@/lib/file-utils"
 import type { PreviewTheme } from "@/types"
 
+import { InnovativeArticles } from "./sections/articles/innovative"
+import { ModernArticles } from "./sections/articles/modern"
+import { ProfessionalArticles } from "./sections/articles/professional"
 import { InnovativeContact } from "./sections/contact/innovative"
 import { ModernContact } from "./sections/contact/modern"
 import { ProfessionalContact } from "./sections/contact/professional"
@@ -21,6 +24,9 @@ import { ProfessionalProjects } from "./sections/projects/professional"
 import { InnovativeReadme } from "./sections/readme/innovative"
 import { ModernReadme } from "./sections/readme/modern"
 import { ProfessionalReadme } from "./sections/readme/professional"
+import { InnovativeNotifications } from "./sections/notifications/innovative"
+import { ModernNotifications } from "./sections/notifications/modern"
+import { ProfessionalNotifications } from "./sections/notifications/professional"
 import { InnovativeSchedule } from "./sections/schedule/innovative"
 import { ModernSchedule } from "./sections/schedule/modern"
 import { ProfessionalSchedule } from "./sections/schedule/professional"
@@ -64,6 +70,16 @@ const SECTION_MAP: Record<string, Record<string, React.ComponentType>> = {
     modern: ModernSchedule,
     innovative: InnovativeSchedule,
     professional: ProfessionalSchedule,
+  },
+  articles: {
+    modern: ModernArticles,
+    innovative: InnovativeArticles,
+    professional: ProfessionalArticles,
+  },
+  notifications: {
+    modern: ModernNotifications,
+    innovative: InnovativeNotifications,
+    professional: ProfessionalNotifications,
   },
 }
 
