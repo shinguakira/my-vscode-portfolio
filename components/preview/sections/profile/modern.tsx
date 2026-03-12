@@ -14,7 +14,7 @@ export function ModernProfile() {
 
   return (
     <div className="min-h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      <div className="max-w-5xl mx-auto px-8 short:px-4 py-16 short:py-6">
+      <div className="max-w-5xl mx-auto px-4 short:px-2 py-16 short:py-6">
         <div className="mb-20 short:mb-6 text-center">
           <div className="mb-8 short:mb-3 flex justify-center">
             <div className="relative">

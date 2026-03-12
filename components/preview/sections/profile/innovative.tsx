@@ -19,7 +19,7 @@ export function InnovativeProfile() {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-700" />
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-8 short:px-4 py-20 short:py-6">
+      <div className="relative max-w-6xl mx-auto px-4 short:px-2 py-20 short:py-6">
         <div className="mb-32 short:mb-6 text-center">
           <div className="mb-12 short:mb-4 inline-block relative">
             <div className="w-40 h-40 short:w-16 short:h-16 relative">
@@ -43,13 +43,13 @@ export function InnovativeProfile() {
           <div className="flex justify-center gap-6 short:gap-3">
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl blur opacity-75 group-hover:opacity-100 transition" />
-              <button className="relative px-8 short:px-4 py-4 short:py-2 bg-black rounded-2xl text-white font-bold text-lg short:text-sm">
+              <button className="relative px-4 short:px-2 py-4 short:py-2 bg-black rounded-2xl text-white font-bold text-lg short:text-sm">
                 {locale === "en" ? "View Projects" : "プロジェクトを見る"}
               </button>
             </div>
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur opacity-75 group-hover:opacity-100 transition" />
-              <button className="relative px-8 short:px-4 py-4 short:py-2 bg-black rounded-2xl text-white font-bold text-lg short:text-sm">
+              <button className="relative px-4 short:px-2 py-4 short:py-2 bg-black rounded-2xl text-white font-bold text-lg short:text-sm">
                 {locale === "en" ? "Contact Me" : "お問い合わせ"}
               </button>
             </div>

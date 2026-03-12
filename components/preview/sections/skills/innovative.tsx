@@ -45,7 +45,7 @@ export function InnovativeSkills() {
 
   return (
     <div className="min-h-full bg-black">
-      <div className="max-w-7xl mx-auto px-8 short:px-4 py-20 short:py-6">
+      <div className="max-w-7xl mx-auto px-4 short:px-2 py-20 short:py-6">
         <h1 className="text-7xl short:text-3xl font-black mb-20 short:mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
           {locale === "en" ? "Technology Stack" : "テクノロジースタック"}
         </h1>

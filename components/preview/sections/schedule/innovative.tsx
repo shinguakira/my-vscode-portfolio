@@ -25,7 +25,7 @@ export function InnovativeSchedule() {
         <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-5xl mx-auto px-8 short:px-4 py-20 short:py-6">
+      <div className="relative max-w-5xl mx-auto px-4 short:px-2 py-20 short:py-6">
         <div className="text-center mb-14 short:mb-6">
           <h1 className="text-8xl short:text-3xl font-black mb-6 short:mb-2 text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-teal-400 to-cyan-400">
             {t.title}
