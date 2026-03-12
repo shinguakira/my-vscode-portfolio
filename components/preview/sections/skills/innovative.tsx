@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useMemo } from "react"
 
 import { ErrorState } from "@/components/preview/error-state"
@@ -72,12 +73,13 @@ export function InnovativeSkills() {
                             className="flex size-10 items-center justify-center rounded-lg p-1.5 mb-2"
                             style={{ backgroundColor: "#ffffff" }}
                           >
-                            <img
+                            <Image
                               src={resolveApiImageUrl(skill.picture)}
                               alt={skill.name}
                               width={28}
                               height={28}
                               className="object-contain"
+                              unoptimized
                             />
                           </div>
                         )}

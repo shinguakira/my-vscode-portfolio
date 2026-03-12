@@ -2,6 +2,7 @@
 
 import type { Project } from "@shinguakira/portfolio-api-types"
 import { ExternalLink, Github, X } from "lucide-react"
+import Image from "next/image"
 import { useState } from "react"
 
 import { ErrorState } from "@/components/preview/error-state"
@@ -56,11 +57,13 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
                 className="border border-gray-200 p-6 hover:border-gray-400 transition-colors cursor-pointer"
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-gray-100">
-                    <img
+                  <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-gray-100">
+                    <Image
                       src={resolveApiImageUrl(project.image ?? "")}
                       alt={project.title}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
+                      unoptimized
                     />
                   </div>
                   <div className="flex-1">
@@ -102,11 +105,13 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
                   <X className="w-6 h-6" />
                 </button>
                 <div className="flex flex-col md:flex-row gap-6">
-                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden shrink-0 border border-gray-200">
-                    <img
+                  <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden shrink-0 border border-gray-200">
+                    <Image
                       src={selectedProject.image}
                       alt={selectedProject.title}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
+                      unoptimized
                     />
                   </div>
                   <div className="flex-1">
@@ -123,11 +128,13 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
               {/* Content */}
               <div className="p-6 md:p-8 space-y-6">
                 {/* Project Image */}
-                <div className="aspect-video rounded-lg overflow-hidden border border-gray-200">
-                  <img
+                <div className="relative aspect-video rounded-lg overflow-hidden border border-gray-200">
+                  <Image
                     src={selectedProject.image}
                     alt={selectedProject.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    unoptimized
                   />
                 </div>
 
@@ -222,12 +229,14 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
                   <div className="relative bg-black border border-gray-800 rounded-3xl p-6 h-full">
                     <div className="flex items-center gap-4 mb-4">
                       <div
-                        className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${gradient} p-0.5 shrink-0`}
+                        className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${gradient} p-0.5 shrink-0`}
                       >
-                        <img
+                        <Image
                           src={resolveApiImageUrl(project.image ?? "")}
                           alt={project.title}
-                          className="w-full h-full object-cover rounded-[calc(1rem-2px)]"
+                          fill
+                          className="object-cover rounded-[calc(1rem-2px)]"
+                          unoptimized
                         />
                       </div>
                       <div>
@@ -281,12 +290,14 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
                         </button>
                         <div className="flex flex-col md:flex-row gap-6">
                           <div
-                            className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br ${gradient} p-0.5 shrink-0`}
+                            className={`relative w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br ${gradient} p-0.5 shrink-0`}
                           >
-                            <img
+                            <Image
                               src={resolveApiImageUrl(selectedProject.image ?? "")}
                               alt={selectedProject.title}
-                              className="w-full h-full object-cover rounded-[calc(1rem-2px)]"
+                              fill
+                              className="object-cover rounded-[calc(1rem-2px)]"
+                              unoptimized
                             />
                           </div>
                           <div className="flex-1">
@@ -305,11 +316,13 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
                       {/* Content */}
                       <div className="p-6 md:p-8 space-y-6">
                         {/* Project Image */}
-                        <div className="aspect-video rounded-xl overflow-hidden border border-gray-800">
-                          <img
+                        <div className="relative aspect-video rounded-xl overflow-hidden border border-gray-800">
+                          <Image
                             src={resolveApiImageUrl(selectedProject.image ?? "")}
                             alt={selectedProject.title}
-                            className="w-full h-full object-cover"
+                            fill
+                            className="object-cover"
+                            unoptimized
                           />
                         </div>
 
@@ -395,12 +408,14 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
               >
                 <div className="flex items-start gap-5">
                   <div
-                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient} p-0.5 shrink-0 group-hover:scale-105 transition-transform`}
+                    className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient} p-0.5 shrink-0 group-hover:scale-105 transition-transform`}
                   >
-                    <img
+                    <Image
                       src={resolveApiImageUrl(project.image ?? "")}
                       alt={project.title}
-                      className="w-full h-full object-cover rounded-[calc(1rem-2px)]"
+                      fill
+                      className="object-cover rounded-[calc(1rem-2px)]"
+                      unoptimized
                     />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -450,12 +465,14 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
                   const gradient = getGradient(idx >= 0 ? idx : 0)
                   return (
                     <div
-                      className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br ${gradient} p-0.5 shrink-0`}
+                      className={`relative w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br ${gradient} p-0.5 shrink-0`}
                     >
-                      <img
+                      <Image
                         src={selectedProject.image}
                         alt={selectedProject.title}
-                        className="w-full h-full object-cover rounded-[calc(1rem-2px)]"
+                        fill
+                        className="object-cover rounded-[calc(1rem-2px)]"
+                        unoptimized
                       />
                     </div>
                   )
@@ -474,11 +491,13 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
             {/* Content */}
             <div className="p-6 md:p-8 space-y-6">
               {/* Project Image */}
-              <div className="aspect-video rounded-xl overflow-hidden border border-slate-700">
-                <img
+              <div className="relative aspect-video rounded-xl overflow-hidden border border-slate-700">
+                <Image
                   src={selectedProject.image}
                   alt={selectedProject.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  unoptimized
                 />
               </div>
 

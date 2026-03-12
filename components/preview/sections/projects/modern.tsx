@@ -1,6 +1,7 @@
 "use client"
 
 import { ExternalLink, Github } from "lucide-react"
+import Image from "next/image"
 
 import { ErrorState } from "@/components/preview/error-state"
 import { LoadingState } from "@/components/preview/loading-state"
@@ -36,11 +37,13 @@ export function ModernProjects() {
               className="rounded-xl shadow-sm group bg-slate-900/50 border-slate-800 backdrop-blur hover:border-slate-700 transition-all duration-300 overflow-hidden"
             >
               {project.image && (
-                <div className="h-48 short:h-24 bg-slate-800 overflow-hidden">
-                  <img
+                <div className="relative h-48 short:h-24 bg-slate-800 overflow-hidden">
+                  <Image
                     src={resolveApiImageUrl(project.image ?? "")}
                     alt={project.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    unoptimized
                   />
                 </div>
               )}

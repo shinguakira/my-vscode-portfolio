@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useMemo } from "react"
 
 import { ErrorState } from "@/components/preview/error-state"
@@ -56,12 +57,13 @@ export function ModernSkills() {
                     <div className="flex items-center gap-3">
                       {skill.picture && (
                         <div className="flex size-8 items-center justify-center rounded-md p-1 bg-white">
-                          <img
+                          <Image
                             src={resolveApiImageUrl(skill.picture)}
                             alt={skill.name}
                             width={24}
                             height={24}
                             className="object-contain"
+                            unoptimized
                           />
                         </div>
                       )}

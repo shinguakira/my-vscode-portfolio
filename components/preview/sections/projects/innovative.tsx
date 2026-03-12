@@ -1,6 +1,7 @@
 "use client"
 
 import { ExternalLink, Github } from "lucide-react"
+import Image from "next/image"
 
 import { ErrorState } from "@/components/preview/error-state"
 import { LoadingState } from "@/components/preview/loading-state"
@@ -42,13 +43,15 @@ export function InnovativeProjects() {
                 <div className="relative bg-black border border-gray-800 rounded-3xl overflow-hidden">
                   <div className="grid md:grid-cols-2">
                     <div
-                      className={`flex items-center justify-center bg-gradient-to-br ${gradient} p-20 short:p-6`}
+                      className={`relative flex items-center justify-center bg-gradient-to-br ${gradient} p-20 short:p-6`}
                     >
                       {project.image ? (
-                        <img
+                        <Image
                           src={resolveApiImageUrl(project.image ?? "")}
                           alt={project.title}
-                          className="max-h-48 object-contain"
+                          fill
+                          className="object-contain"
+                          unoptimized
                         />
                       ) : (
                         <div className="text-6xl text-white/50">📁</div>

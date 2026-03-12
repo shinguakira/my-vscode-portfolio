@@ -2,6 +2,7 @@
 
 import type { Project } from "@shinguakira/portfolio-api-types"
 import { ExternalLink, FolderCode, Github, Tag } from "lucide-react"
+import Image from "next/image"
 
 import { useLocale } from "@/contexts/locale-context"
 import { useTheme } from "@/contexts/theme-context"
@@ -38,7 +39,7 @@ export function ExtensionShowcase({ extension }: ExtensionShowcaseProps) {
         <div className="flex flex-col md:flex-row gap-6">
           {/* Image or icon */}
           <div
-            className="w-20 h-20 md:w-28 md:h-28 rounded-2xl flex items-center justify-center shrink-0 overflow-hidden"
+            className="relative w-20 h-20 md:w-28 md:h-28 rounded-2xl flex items-center justify-center shrink-0 overflow-hidden"
             style={{
               background: extension.image
                 ? undefined
@@ -47,10 +48,12 @@ export function ExtensionShowcase({ extension }: ExtensionShowcaseProps) {
             }}
           >
             {extension.image ? (
-              <img
+              <Image
                 src={resolveApiImageUrl(extension.image ?? "")}
                 alt={extension.title}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                unoptimized
               />
             ) : (
               <FolderCode className="w-10 h-10 md:w-14 md:h-14" style={{ color: accentColor }} />
@@ -134,10 +137,12 @@ export function ExtensionShowcase({ extension }: ExtensionShowcaseProps) {
                 className="aspect-video rounded-lg overflow-hidden relative"
                 style={{ border: `1px solid ${borderColor}` }}
               >
-                <img
+                <Image
                   src={resolveApiImageUrl(extension.image ?? "")}
                   alt={extension.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  unoptimized
                 />
               </div>
             </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import { ExternalLink, FolderCode, Github } from "lucide-react"
+import Image from "next/image"
 
 import { useLocale } from "@/contexts/locale-context"
 import { useTheme } from "@/contexts/theme-context"
@@ -66,10 +67,13 @@ export function ExtensionsPanel({ openExtension }: ExtensionsPanelProps) {
           <div className="flex items-start gap-2 md:gap-3">
             <div className="shrink-0">
               {project.image ? (
-                <img
+                <Image
                   src={resolveApiImageUrl(project.image ?? "")}
                   alt={project.title}
+                  width={28}
+                  height={28}
                   className="w-6 h-6 md:w-7 md:h-7 rounded object-cover"
+                  unoptimized
                 />
               ) : (
                 <FolderCode className="w-6 h-6 md:w-7 md:h-7" style={{ color: accentColor }} />
