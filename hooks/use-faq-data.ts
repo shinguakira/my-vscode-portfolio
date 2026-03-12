@@ -11,10 +11,7 @@ import { usePortfolioData } from "./use-portfolio-data"
 export function useFaqData() {
   const locale = useLocale()
 
-  const fetcher = useCallback(
-    (signal: AbortSignal) => fetchFaqs(locale, signal),
-    [locale],
-  )
+  const fetcher = useCallback((signal: AbortSignal) => fetchFaqs(locale, signal), [locale])
 
   return usePortfolioData<Faq[]>(`faqs-${locale}`, fetcher)
 }

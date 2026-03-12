@@ -27,12 +27,12 @@ export function usePortfolioData<T>(
 
     const cached = cache.get(key) as T | undefined
     if (cached) {
-      setState({ data: cached, loading: false, error: null })
+      queueMicrotask(() => setState({ data: cached, loading: false, error: null }))
       return
     }
 
     const controller = new AbortController()
-    setState((prev) => ({ ...prev, loading: true, error: null }))
+    queueMicrotask(() => setState({ data: null, loading: true, error: null }))
 
     fetcher(controller.signal)
       .then((data) => {

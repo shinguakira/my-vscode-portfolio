@@ -8,7 +8,6 @@ import { useLocale } from "@/contexts/locale-context"
 import { useProjectsData } from "@/hooks/use-projects-data"
 import { resolveApiImageUrl } from "@/lib/api/client"
 
-
 const GRADIENTS = [
   "from-cyan-500 via-blue-500 to-purple-500",
   "from-purple-500 via-pink-500 to-red-500",
@@ -46,7 +45,11 @@ export function InnovativeProjects() {
                       className={`flex items-center justify-center bg-gradient-to-br ${gradient} p-20 short:p-6`}
                     >
                       {project.image ? (
-                        <img src={resolveApiImageUrl(project.image ?? "")} alt={project.title} className="max-h-48 object-contain" />
+                        <img
+                          src={resolveApiImageUrl(project.image ?? "")}
+                          alt={project.title}
+                          className="max-h-48 object-contain"
+                        />
                       ) : (
                         <div className="text-6xl text-white/50">📁</div>
                       )}

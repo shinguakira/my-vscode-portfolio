@@ -3,9 +3,10 @@
 import { useMemo, useState } from "react"
 
 import type { FileItem, SearchResult } from "@/types"
+
 import { useProjectsData } from "./use-projects-data"
 
-export function useFileSearch(openFile: (file: FileItem, path: string[]) => void, locale: string) {
+export function useFileSearch(openFile: (file: FileItem, path: string[]) => void) {
   const { data: projects } = useProjectsData()
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
@@ -23,11 +24,26 @@ export function useFileSearch(openFile: (file: FileItem, path: string[]) => void
         type: "folder" as const,
         icon: "folder",
         children: [
-          { name: "projects.ts", type: "file" as const, icon: "typescript", content: `export const projects = [\n${projectsContent}\n]` },
+          {
+            name: "projects.ts",
+            type: "file" as const,
+            icon: "typescript",
+            content: `export const projects = [\n${projectsContent}\n]`,
+          },
         ],
       },
-      { name: "articles.md", type: "file" as const, icon: "newspaper", content: "# Articles\n\nTechnical blog posts" },
-      { name: "notifications.json", type: "file" as const, icon: "bell", content: "{\n  \"notifications\": []\n}" },
+      {
+        name: "articles.md",
+        type: "file" as const,
+        icon: "newspaper",
+        content: "# Articles\n\nTechnical blog posts",
+      },
+      {
+        name: "notifications.json",
+        type: "file" as const,
+        icon: "bell",
+        content: '{\n  "notifications": []\n}',
+      },
     ]
   }, [projects])
 

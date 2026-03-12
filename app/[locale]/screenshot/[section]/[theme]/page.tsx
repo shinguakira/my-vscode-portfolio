@@ -34,7 +34,18 @@ import { ProfessionalStrongPoints } from "@/components/preview/sections/strong-p
 import { DEFAULT_SETTINGS } from "@/constants/vscode-config"
 import { ThemeProvider } from "@/contexts/theme-context"
 
-const SECTIONS = ["profile", "projects", "skills", "contact", "strong-points", "faq", "experience", "schedule", "articles", "notifications"]
+const SECTIONS = [
+  "profile",
+  "projects",
+  "skills",
+  "contact",
+  "strong-points",
+  "faq",
+  "experience",
+  "schedule",
+  "articles",
+  "notifications",
+]
 const THEMES = ["modern", "innovative", "professional"]
 
 const SECTION_MAP: Record<string, Record<string, React.ComponentType>> = {

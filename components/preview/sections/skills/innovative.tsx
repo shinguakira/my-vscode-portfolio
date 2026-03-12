@@ -52,8 +52,7 @@ export function InnovativeSkills() {
 
         <div className="space-y-16 short:space-y-6">
           {grouped.map(([category, items], catIndex) => {
-            const gradient =
-              CATEGORY_GRADIENTS[category] ?? "from-gray-400 to-gray-500"
+            const gradient = CATEGORY_GRADIENTS[category] ?? "from-gray-400 to-gray-500"
             return (
               <div key={catIndex}>
                 <h2

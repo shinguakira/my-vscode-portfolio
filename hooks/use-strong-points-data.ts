@@ -11,10 +11,7 @@ import { usePortfolioData } from "./use-portfolio-data"
 export function useStrongPointsData() {
   const locale = useLocale()
 
-  const fetcher = useCallback(
-    (signal: AbortSignal) => fetchStrongPoints(locale, signal),
-    [locale],
-  )
+  const fetcher = useCallback((signal: AbortSignal) => fetchStrongPoints(locale, signal), [locale])
 
   return usePortfolioData<StrongPoint[]>(`strong-points-${locale}`, fetcher)
 }

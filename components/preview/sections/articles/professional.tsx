@@ -14,9 +14,10 @@ export function ProfessionalArticles() {
   if (loading) return <LoadingState />
   if (error || !data) return <ErrorState message={error ?? undefined} />
 
-  const t = locale === "en"
-    ? { title: "Articles", sub: "Technical Blog Posts", total: "articles published" }
-    : { title: "記事一覧", sub: "技術ブログ投稿", total: "件の記事を公開" }
+  const t =
+    locale === "en"
+      ? { title: "Articles", sub: "Technical Blog Posts", total: "articles published" }
+      : { title: "記事一覧", sub: "技術ブログ投稿", total: "件の記事を公開" }
 
   return (
     <div className="min-h-full bg-white">
@@ -26,7 +27,9 @@ export function ProfessionalArticles() {
             {t.title}
           </h1>
           <p className="text-xl short:text-sm text-gray-600">{t.sub}</p>
-          <p className="text-sm text-gray-400 mt-2">{data.totalCount} {t.total}</p>
+          <p className="text-sm text-gray-400 mt-2">
+            {data.totalCount} {t.total}
+          </p>
         </div>
 
         <div className="divide-y divide-gray-100">
@@ -55,7 +58,11 @@ export function ProfessionalArticles() {
                     ))}
                   </div>
                   <div className="flex items-center gap-4 text-sm text-gray-400">
-                    <span>{new Date(article.created_at).toLocaleDateString(locale === "en" ? "en-US" : "ja-JP")}</span>
+                    <span>
+                      {new Date(article.created_at).toLocaleDateString(
+                        locale === "en" ? "en-US" : "ja-JP",
+                      )}
+                    </span>
                     <span className="flex items-center gap-1">
                       <Heart className="w-3.5 h-3.5" />
                       {article.likes_count}

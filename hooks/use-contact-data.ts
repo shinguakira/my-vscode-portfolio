@@ -8,10 +8,7 @@ import { fetchContact } from "@/lib/api/endpoints"
 import { usePortfolioData } from "./use-portfolio-data"
 
 export function useContactData() {
-  const fetcher = useCallback(
-    (signal: AbortSignal) => fetchContact(signal),
-    [],
-  )
+  const fetcher = useCallback((signal: AbortSignal) => fetchContact(signal), [])
 
   return usePortfolioData<ContactResponse>("contact", fetcher)
 }

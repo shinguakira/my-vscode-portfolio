@@ -11,19 +11,28 @@ export function useContactForm() {
   const [sent, setSent] = useState(false)
   const [error, setError] = useState("")
 
-  const t = locale === "en"
-    ? {
-        name: "Name", email: "Email", message: "Message",
-        send: "Send Message", sending: "Sending...",
-        success: "Message sent!", thankYou: "Thank you. I'll get back to you soon.",
-        another: "Send Another",
-      }
-    : {
-        name: "お名前", email: "メールアドレス", message: "メッセージ",
-        send: "送信", sending: "送信中...",
-        success: "送信完了！", thankYou: "お問い合わせありがとうございます。追ってご連絡いたします。",
-        another: "別のメッセージを送信",
-      }
+  const t =
+    locale === "en"
+      ? {
+          name: "Name",
+          email: "Email",
+          message: "Message",
+          send: "Send Message",
+          sending: "Sending...",
+          success: "Message sent!",
+          thankYou: "Thank you. I'll get back to you soon.",
+          another: "Send Another",
+        }
+      : {
+          name: "お名前",
+          email: "メールアドレス",
+          message: "メッセージ",
+          send: "送信",
+          sending: "送信中...",
+          success: "送信完了！",
+          thankYou: "お問い合わせありがとうございます。追ってご連絡いたします。",
+          another: "別のメッセージを送信",
+        }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

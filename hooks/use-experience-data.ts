@@ -11,10 +11,7 @@ import { usePortfolioData } from "./use-portfolio-data"
 export function useExperienceData() {
   const locale = useLocale()
 
-  const fetcher = useCallback(
-    (signal: AbortSignal) => fetchExperience(locale, signal),
-    [locale],
-  )
+  const fetcher = useCallback((signal: AbortSignal) => fetchExperience(locale, signal), [locale])
 
   return usePortfolioData<WorkExperience[]>(`experience-${locale}`, fetcher)
 }

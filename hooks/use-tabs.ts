@@ -5,9 +5,10 @@ import type React from "react"
 import { useCallback, useMemo, useState } from "react"
 
 import type { FileItem, Tab } from "@/types"
+
 import { useProjectsData } from "./use-projects-data"
 
-export function useTabs(locale: string) {
+export function useTabs() {
   const { data: projects } = useProjectsData()
   const [tabs, setTabs] = useState<Tab[]>([])
   const [activeTab, setActiveTab] = useState<string | null>(null)

@@ -7,7 +7,6 @@ import { useTheme } from "@/contexts/theme-context"
 import { useProjectsData } from "@/hooks/use-projects-data"
 import { resolveApiImageUrl } from "@/lib/api/client"
 
-
 interface ExtensionsPanelProps {
   openExtension: (extensionId: string) => void
 }
@@ -47,9 +46,7 @@ export function ExtensionsPanel({ openExtension }: ExtensionsPanelProps) {
           {locale === "en" ? "Installed" : "インストール済み"}
         </div>
         <div className="text-[10px] md:text-xs" style={{ color: textMuted }}>
-          {locale === "en"
-            ? `${projects.length} extensions`
-            : `${projects.length} 件の拡張機能`}
+          {locale === "en" ? `${projects.length} extensions` : `${projects.length} 件の拡張機能`}
         </div>
       </div>
 
@@ -75,10 +72,7 @@ export function ExtensionsPanel({ openExtension }: ExtensionsPanelProps) {
                   className="w-6 h-6 md:w-7 md:h-7 rounded object-cover"
                 />
               ) : (
-                <FolderCode
-                  className="w-6 h-6 md:w-7 md:h-7"
-                  style={{ color: accentColor }}
-                />
+                <FolderCode className="w-6 h-6 md:w-7 md:h-7" style={{ color: accentColor }} />
               )}
             </div>
             <div className="flex-1 min-w-0">

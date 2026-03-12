@@ -11,10 +11,7 @@ import { usePortfolioData } from "./use-portfolio-data"
 export function useProfileData() {
   const locale = useLocale()
 
-  const fetcher = useCallback(
-    (signal: AbortSignal) => fetchProfile(locale, signal),
-    [locale],
-  )
+  const fetcher = useCallback((signal: AbortSignal) => fetchProfile(locale, signal), [locale])
 
   return usePortfolioData<ProfileResponse>(`profile-${locale}`, fetcher)
 }

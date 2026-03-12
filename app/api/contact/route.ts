@@ -10,10 +10,7 @@ export async function POST(request: Request) {
     }
 
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
-      return NextResponse.json(
-        { error: "Email configuration missing" },
-        { status: 500 },
-      )
+      return NextResponse.json({ error: "Email configuration missing" }, { status: 500 })
     }
 
     const transporter = nodemailer.createTransport({

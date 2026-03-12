@@ -4,8 +4,8 @@ import { ChevronUp, Trash2 } from "lucide-react"
 import type React from "react"
 import { useCallback, useEffect, useRef, useState } from "react"
 
-import { useExperienceData } from "@/hooks/use-experience-data"
 import { useTheme } from "@/contexts/theme-context"
+import { useExperienceData } from "@/hooks/use-experience-data"
 import { adjustBrightness } from "@/lib/color-utils"
 import { cn } from "@/lib/utils"
 
@@ -25,8 +25,14 @@ const TERMINAL_HELP_TEXT = [
 ]
 
 const TERMINAL_LS_FILES = [
-  "about.md", "projects.md", "skills.md", "experience.md",
-  "contact.md", "faq.md", "strong-points.md", "changelog.md",
+  "about.md",
+  "projects.md",
+  "skills.md",
+  "experience.md",
+  "contact.md",
+  "faq.md",
+  "strong-points.md",
+  "changelog.md",
 ]
 
 const TERMINAL_START_SEQUENCE = [
@@ -48,7 +54,7 @@ interface LogEntry {
 }
 
 export function TerminalPanel({ isOpen, onCommandRef }: TerminalPanelProps) {
-  const { data, loading, error } = useExperienceData()
+  const { data } = useExperienceData()
   const { settings } = useTheme()
   const [logs, setLogs] = useState<LogEntry[]>(
     TERMINAL_INITIAL_LOGS.map((content, i) => ({ id: i + 1, type: "info" as const, content })),

@@ -8,7 +8,6 @@ import { useLocale } from "@/contexts/locale-context"
 import { useProjectsData } from "@/hooks/use-projects-data"
 import { resolveApiImageUrl } from "@/lib/api/client"
 
-
 export function ModernProjects() {
   const locale = useLocale()
   const { data: projects, loading, error } = useProjectsData()

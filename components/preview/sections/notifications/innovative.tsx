@@ -14,9 +14,10 @@ export function InnovativeNotifications() {
   if (loading) return <LoadingState />
   if (error || !notifications) return <ErrorState message={error ?? undefined} />
 
-  const t = locale === "en"
-    ? { title: "NOTIFICATIONS", sub: "What's New", empty: "No notifications yet" }
-    : { title: "NOTIFICATIONS", sub: "最新情報", empty: "お知らせはまだありません" }
+  const t =
+    locale === "en"
+      ? { title: "NOTIFICATIONS", sub: "What's New", empty: "No notifications yet" }
+      : { title: "NOTIFICATIONS", sub: "最新情報", empty: "お知らせはまだありません" }
 
   return (
     <div className="min-h-full bg-black relative overflow-hidden">
@@ -52,10 +53,16 @@ export function InnovativeNotifications() {
                       <h3 className="text-xl short:text-base font-bold text-white mb-3 short:mb-1">
                         {item.title}
                       </h3>
-                      <p className="text-gray-400 leading-relaxed mb-4 short:mb-2 short:text-sm">{item.content}</p>
+                      <p className="text-gray-400 leading-relaxed mb-4 short:mb-2 short:text-sm">
+                        {item.content}
+                      </p>
                       <div className="flex items-center gap-2 text-sm text-gray-600">
                         <Calendar className="w-4 h-4" />
-                        <span>{new Date(item.date).toLocaleDateString(locale === "en" ? "en-US" : "ja-JP")}</span>
+                        <span>
+                          {new Date(item.date).toLocaleDateString(
+                            locale === "en" ? "en-US" : "ja-JP",
+                          )}
+                        </span>
                       </div>
                     </div>
                   </div>

@@ -55,9 +55,7 @@ export function ModernSkills() {
                   >
                     <div className="flex items-center gap-3">
                       {skill.picture && (
-                        <div
-                          className="flex size-8 items-center justify-center rounded-md p-1 bg-white"
-                        >
+                        <div className="flex size-8 items-center justify-center rounded-md p-1 bg-white">
                           <img
                             src={resolveApiImageUrl(skill.picture)}
                             alt={skill.name}

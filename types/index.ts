@@ -58,4 +58,3 @@ export interface ArticlesData {
   totalCount: number
   articles: Article[]
 }
-

@@ -62,7 +62,9 @@ for (const locale of LOCALES) {
   test(`${locale}/terminal`, async ({ page }) => {
     await setupPage(page, locale)
     // Open terminal via status bar button
-    await page.click('button[title="Open Terminal"], button[title="パネルを開く"], button[title="Open Panel"]')
+    await page.click(
+      'button[title="Open Terminal"], button[title="パネルを開く"], button[title="Open Panel"]',
+    )
     await page.waitForTimeout(500)
     await expect(page).toHaveScreenshot([locale, "features", "terminal.png"], {
       maxDiffPixelRatio: 0.01,

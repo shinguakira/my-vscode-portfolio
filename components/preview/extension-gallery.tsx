@@ -9,7 +9,6 @@ import { LoadingState } from "@/components/preview/loading-state"
 import { useLocale } from "@/contexts/locale-context"
 import { useProjectsData } from "@/hooks/use-projects-data"
 import { resolveApiImageUrl } from "@/lib/api/client"
-
 import type { PreviewTheme } from "@/types"
 
 const GRADIENTS = [
@@ -43,12 +42,14 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
               {locale === "en" ? "Projects" : "\u30D7\u30ED\u30B8\u30A7\u30AF\u30C8\u4E00\u89A7"}
             </h1>
             <p className="text-xl text-gray-600">
-              {locale === "en" ? "Click to view details" : "\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u8A73\u7D30\u3092\u8868\u793A"}
+              {locale === "en"
+                ? "Click to view details"
+                : "\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u8A73\u7D30\u3092\u8868\u793A"}
             </p>
           </div>
 
           <div className="space-y-6">
-            {projects.map((project, index) => (
+            {projects.map((project) => (
               <div
                 key={project.title}
                 onClick={() => setSelectedProject(project)}
@@ -200,7 +201,9 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
               PROJECTS
             </h1>
             <p className="text-2xl text-gray-400 font-light">
-              {locale === "en" ? "Click to view details" : "\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u8A73\u7D30\u3092\u8868\u793A"}
+              {locale === "en"
+                ? "Click to view details"
+                : "\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u8A73\u7D30\u3092\u8868\u793A"}
             </p>
           </div>
 
@@ -375,7 +378,9 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
             Featured Projects
           </h1>
           <p className="text-xl text-slate-400">
-            {locale === "en" ? "Click to view details" : "\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u8A73\u7D30\u3092\u8868\u793A"}
+            {locale === "en"
+              ? "Click to view details"
+              : "\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u8A73\u7D30\u3092\u8868\u793A"}
           </p>
         </div>
 
@@ -400,7 +405,9 @@ export function ExtensionGallery({ theme }: { theme: PreviewTheme }) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="text-xl font-bold text-white truncate mb-2">{project.title}</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed mb-4">{project.description}</p>
+                    <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                      {project.description}
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.slice(0, 4).map((tech) => (
                         <span

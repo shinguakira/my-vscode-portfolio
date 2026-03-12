@@ -11,10 +11,7 @@ import { usePortfolioData } from "./use-portfolio-data"
 export function useEducationData() {
   const locale = useLocale()
 
-  const fetcher = useCallback(
-    (signal: AbortSignal) => fetchEducation(locale, signal),
-    [locale],
-  )
+  const fetcher = useCallback((signal: AbortSignal) => fetchEducation(locale, signal), [locale])
 
   return usePortfolioData<EducationHistory[]>(`education-${locale}`, fetcher)
 }

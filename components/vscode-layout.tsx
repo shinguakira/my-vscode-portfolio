@@ -16,7 +16,6 @@ import { SettingsPanel } from "@/components/vscode/settings-panel"
 import { StatusBar } from "@/components/vscode/status-bar"
 import { TabBar } from "@/components/vscode/tab-bar"
 import { TitleBar } from "@/components/vscode/title-bar"
-import { useLocale } from "@/contexts/locale-context"
 import { ThemeProvider, useTheme } from "@/contexts/theme-context"
 import { useFileSearch } from "@/hooks/use-file-search"
 import { useProfileData } from "@/hooks/use-profile-data"
@@ -43,7 +42,6 @@ function VSCodeLayoutInner({
   saveSettings: (s: import("@/types").VSCodeSettings) => void
   changePreviewTheme: (themeId: string) => void
 }) {
-  const locale = useLocale()
   const { settings, bgMain, bgActivityBar, accentColor } = useTheme()
   const { data: projects } = useProjectsData()
   const { data: profile } = useProfileData()
@@ -60,9 +58,9 @@ function VSCodeLayoutInner({
       .join(",\n")
     const sections: FileItem[] = [
       { name: "about.ts", type: "file", icon: "typescript", content: aboutContent },
-      { name: "skills.json", type: "file", icon: "json", content: "{\n  \"skills\": []\n}" },
+      { name: "skills.json", type: "file", icon: "json", content: '{\n  "skills": []\n}' },
       { name: "faq.ts", type: "file", icon: "typescript", content: "// FAQ" },
-      { name: "contact.json", type: "file", icon: "json", content: "{\n  \"contact\": {}\n}" },
+      { name: "contact.json", type: "file", icon: "json", content: '{\n  "contact": {}\n}' },
       { name: "experience.ts", type: "file", icon: "typescript", content: "// Work Experience" },
       { name: "strong-points.js", type: "file", icon: "javascript", content: "// Strong Points" },
     ]
@@ -71,13 +69,28 @@ function VSCodeLayoutInner({
       type: "folder",
       icon: "folder",
       children: [
-        { name: "projects.ts", type: "file", icon: "typescript", content: `export const projects = [\n${projectsContent}\n]` },
+        {
+          name: "projects.ts",
+          type: "file",
+          icon: "typescript",
+          content: `export const projects = [\n${projectsContent}\n]`,
+        },
       ],
     }
     return [
       { name: "src", type: "folder", icon: "folder", children: [...sections, projectsFolder] },
-      { name: "articles.md", type: "file", icon: "newspaper", content: "# Articles\n\nTechnical blog posts" },
-      { name: "notifications.json", type: "file", icon: "bell", content: "{\n  \"notifications\": []\n}" },
+      {
+        name: "articles.md",
+        type: "file",
+        icon: "newspaper",
+        content: "# Articles\n\nTechnical blog posts",
+      },
+      {
+        name: "notifications.json",
+        type: "file",
+        icon: "bell",
+        content: '{\n  "notifications": []\n}',
+      },
       { name: "schedule.exe", type: "file", icon: "calendar", content: "// Schedule" },
     ]
   }, [projects, profile])
@@ -92,7 +105,7 @@ function VSCodeLayoutInner({
     openExtension,
     closeTab,
     updateTabContent,
-  } = useTabs(locale)
+  } = useTabs()
 
   const {
     isMobile,
@@ -120,7 +133,7 @@ function VSCodeLayoutInner({
     searchResults,
     handleSearchChange,
     openSearchResult: openSearchResultRaw,
-  } = useFileSearch(openFile, locale)
+  } = useFileSearch(openFile)
 
   const openSearchResult = useCallback(
     (result: SearchResult) => {

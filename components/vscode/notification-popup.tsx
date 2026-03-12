@@ -14,7 +14,12 @@ interface NotificationPopupProps {
   position?: "top" | "bottom"
 }
 
-export function NotificationPopup({ open, onClose, onOpenFile, position = "bottom" }: NotificationPopupProps) {
+export function NotificationPopup({
+  open,
+  onClose,
+  onOpenFile,
+  position = "bottom",
+}: NotificationPopupProps) {
   const locale = useLocale()
   const { bgSidebar, textPrimary, textSecondary, textMuted, accentColor } = useTheme()
   const { data: notifications, loading } = useNotificationsData()
@@ -31,9 +36,20 @@ export function NotificationPopup({ open, onClose, onOpenFile, position = "botto
 
   if (!open) return null
 
-  const t = locale === "en"
-    ? { title: "Notifications", empty: "No notifications", viewAll: "View All", loading: "Loading..." }
-    : { title: "お知らせ", empty: "お知らせはありません", viewAll: "すべて表示", loading: "読み込み中..." }
+  const t =
+    locale === "en"
+      ? {
+          title: "Notifications",
+          empty: "No notifications",
+          viewAll: "View All",
+          loading: "Loading...",
+        }
+      : {
+          title: "お知らせ",
+          empty: "お知らせはありません",
+          viewAll: "すべて表示",
+          loading: "読み込み中...",
+        }
 
   return (
     <div
@@ -44,7 +60,9 @@ export function NotificationPopup({ open, onClose, onOpenFile, position = "botto
       style={{ backgroundColor: bgSidebar }}
     >
       <div className="flex items-center justify-between px-3 py-2 border-b border-white/10">
-        <span className="text-xs font-semibold" style={{ color: textPrimary }}>{t.title}</span>
+        <span className="text-xs font-semibold" style={{ color: textPrimary }}>
+          {t.title}
+        </span>
         <button onClick={onClose} className="hover:opacity-70 transition-opacity">
           <X className="w-3.5 h-3.5" style={{ color: textMuted }} />
         </button>
@@ -53,12 +71,16 @@ export function NotificationPopup({ open, onClose, onOpenFile, position = "botto
       <div className="overflow-y-auto max-h-72">
         {loading ? (
           <div className="flex items-center justify-center py-8">
-            <p className="text-xs" style={{ color: textMuted }}>{t.loading}</p>
+            <p className="text-xs" style={{ color: textMuted }}>
+              {t.loading}
+            </p>
           </div>
         ) : !notifications || notifications.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8">
             <Bell className="w-8 h-8 mb-2" style={{ color: textMuted }} />
-            <p className="text-xs" style={{ color: textMuted }}>{t.empty}</p>
+            <p className="text-xs" style={{ color: textMuted }}>
+              {t.empty}
+            </p>
           </div>
         ) : (
           notifications.map((item, i) => (
@@ -74,7 +96,10 @@ export function NotificationPopup({ open, onClose, onOpenFile, position = "botto
                   <Bell className="w-3.5 h-3.5" style={{ color: accentColor }} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-medium leading-snug mb-0.5" style={{ color: textPrimary }}>
+                  <p
+                    className="text-xs font-medium leading-snug mb-0.5"
+                    style={{ color: textPrimary }}
+                  >
                     {item.title}
                   </p>
                   <p
@@ -99,7 +124,10 @@ export function NotificationPopup({ open, onClose, onOpenFile, position = "botto
       {notifications && notifications.length > 0 && onOpenFile && (
         <div className="px-3 py-2 border-t border-white/10">
           <button
-            onClick={() => { onOpenFile(); onClose() }}
+            onClick={() => {
+              onOpenFile()
+              onClose()
+            }}
             className="w-full text-center text-xs py-1 rounded hover:bg-white/10 transition-colors"
             style={{ color: accentColor }}
           >

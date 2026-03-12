@@ -14,9 +14,14 @@ export function ModernNotifications() {
   if (loading) return <LoadingState />
   if (error || !notifications) return <ErrorState message={error ?? undefined} />
 
-  const t = locale === "en"
-    ? { title: "Notifications", sub: "Latest updates and announcements", empty: "No notifications" }
-    : { title: "お知らせ", sub: "最新のお知らせ・アナウンス", empty: "お知らせはありません" }
+  const t =
+    locale === "en"
+      ? {
+          title: "Notifications",
+          sub: "Latest updates and announcements",
+          empty: "No notifications",
+        }
+      : { title: "お知らせ", sub: "最新のお知らせ・アナウンス", empty: "お知らせはありません" }
 
   return (
     <div className="min-h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
@@ -46,12 +51,20 @@ export function ModernNotifications() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2 short:mb-1">
-                      <h3 className="text-lg short:text-base font-semibold text-white">{item.title}</h3>
+                      <h3 className="text-lg short:text-base font-semibold text-white">
+                        {item.title}
+                      </h3>
                     </div>
-                    <p className="text-slate-400 leading-relaxed mb-3 short:mb-1 short:text-sm">{item.content}</p>
+                    <p className="text-slate-400 leading-relaxed mb-3 short:mb-1 short:text-sm">
+                      {item.content}
+                    </p>
                     <div className="flex items-center gap-1.5 text-sm text-slate-500">
                       <Calendar className="w-3.5 h-3.5" />
-                      <span>{new Date(item.date).toLocaleDateString(locale === "en" ? "en-US" : "ja-JP")}</span>
+                      <span>
+                        {new Date(item.date).toLocaleDateString(
+                          locale === "en" ? "en-US" : "ja-JP",
+                        )}
+                      </span>
                     </div>
                   </div>
                 </div>

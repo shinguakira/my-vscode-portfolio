@@ -4,10 +4,9 @@ import type { Project } from "@shinguakira/portfolio-api-types"
 import { ExternalLink, FolderCode, Github, Tag } from "lucide-react"
 
 import { useLocale } from "@/contexts/locale-context"
-import { resolveApiImageUrl } from "@/lib/api/client"
 import { useTheme } from "@/contexts/theme-context"
+import { resolveApiImageUrl } from "@/lib/api/client"
 import { adjustBrightness } from "@/lib/color-utils"
-
 
 interface ExtensionShowcaseProps {
   extension: Project
@@ -54,10 +53,7 @@ export function ExtensionShowcase({ extension }: ExtensionShowcaseProps) {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <FolderCode
-                className="w-10 h-10 md:w-14 md:h-14"
-                style={{ color: accentColor }}
-              />
+              <FolderCode className="w-10 h-10 md:w-14 md:h-14" style={{ color: accentColor }} />
             )}
           </div>
 
@@ -134,7 +130,10 @@ export function ExtensionShowcase({ extension }: ExtensionShowcaseProps) {
                 <span style={{ color: accentColor }}>▎</span>
                 {locale === "en" ? "Preview" : "プレビュー"}
               </h2>
-              <div className="aspect-video rounded-lg overflow-hidden relative" style={{ border: `1px solid ${borderColor}` }}>
+              <div
+                className="aspect-video rounded-lg overflow-hidden relative"
+                style={{ border: `1px solid ${borderColor}` }}
+              >
                 <img
                   src={resolveApiImageUrl(extension.image ?? "")}
                   alt={extension.title}

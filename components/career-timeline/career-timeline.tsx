@@ -47,13 +47,23 @@ export type TimelineVariant = "innovative" | "professional" | "modern"
 
 /* ─── Colors for blocks ─── */
 
-const BLOCK_COLORS = ["#8b5cf6", "#3b82f6", "#14b8a6", "#f59e0b", "#ef4444", "#06b6d4", "#ec4899", "#10b981"]
+const BLOCK_COLORS = [
+  "#8b5cf6",
+  "#3b82f6",
+  "#14b8a6",
+  "#f59e0b",
+  "#ef4444",
+  "#06b6d4",
+  "#ec4899",
+  "#10b981",
+]
 
 /* ─── Parse WorkExperience.period to startDate/endDate ─── */
 
 function extractYearMonth(s: string): string {
   if (!s) return ""
-  if (s.includes("現在") || s.toLowerCase().includes("present") || s.includes("(現在)")) return "present"
+  if (s.includes("現在") || s.toLowerCase().includes("present") || s.includes("(現在)"))
+    return "present"
   const jaMatch = s.match(/(\d{4})年(\d{1,2})月/)
   if (jaMatch) return `${jaMatch[1]}-${jaMatch[2].padStart(2, "0")}`
   const isoMatch = s.match(/(\d{4})[/-](\d{1,2})/)
@@ -96,11 +106,6 @@ function toTimelineItems(experiences: WorkExperience[]): TimelineItem[] {
 /* ─── Pre-2023 cutoff: items starting before 2023 get half height ─── */
 
 const PX_HALF = PX / 2
-
-/** Compute pixel-per-month for a given date (half scale before CUTOFF_YEAR) */
-function pxForDate(d: Date): number {
-  return d.getFullYear() < CUTOFF_YEAR ? PX_HALF : PX
-}
 
 /** Compute cumulative pixel offset from minD to target, respecting the cutoff boundary */
 function pxOffset(minD: Date, target: Date): number {
@@ -337,16 +342,12 @@ export function CareerTimeline({
                     <GraduationCap className="w-5 h-5 text-blue-400" />
                   </div>
                 )}
-                {variant !== "professional" && i > 0 && (
-                  <div className="w-10 shrink-0" />
-                )}
+                {variant !== "professional" && i > 0 && <div className="w-10 shrink-0" />}
                 {variant === "professional" && (
                   <GraduationCap className="w-5 h-5 text-gray-500 shrink-0" />
                 )}
                 <div>
-                  <h3 className={s.educationTitle}>
-                    {edu.department}
-                  </h3>
+                  <h3 className={s.educationTitle}>{edu.department}</h3>
                   <p className={s.educationSub}>
                     {edu.school} / {edu.startYear} - {edu.endYear}
                   </p>

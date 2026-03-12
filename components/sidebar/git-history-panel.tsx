@@ -21,8 +21,22 @@ export function GitHistoryPanel() {
   const { accentColor, textPrimary, textSecondary, textMuted } = useTheme()
   const { data, loading, error } = useExperienceData()
 
-  if (loading) return <div className="py-2 px-3"><div className="text-[10px] md:text-xs animate-pulse" style={{ color: textMuted }}>Loading...</div></div>
-  if (error || !data) return <div className="py-2 px-3"><div className="text-[10px] md:text-xs" style={{ color: textMuted }}>Failed to load</div></div>
+  if (loading)
+    return (
+      <div className="py-2 px-3">
+        <div className="text-[10px] md:text-xs animate-pulse" style={{ color: textMuted }}>
+          Loading...
+        </div>
+      </div>
+    )
+  if (error || !data)
+    return (
+      <div className="py-2 px-3">
+        <div className="text-[10px] md:text-xs" style={{ color: textMuted }}>
+          Failed to load
+        </div>
+      </div>
+    )
 
   return (
     <div className="py-2">
@@ -32,10 +46,7 @@ export function GitHistoryPanel() {
         const changes = experience.description
 
         return (
-          <div
-            key={hash}
-            className="px-2 md:px-3 py-2 md:py-3 border-b border-opacity-10 relative"
-          >
+          <div key={hash} className="px-2 md:px-3 py-2 md:py-3 border-b border-opacity-10 relative">
             <div className="absolute left-[15px] md:left-[19px] top-8 bottom-[-20px] w-[2px] bg-gray-700 opacity-30 last:hidden"></div>
             <div className="flex gap-2 md:gap-3">
               <div className="flex flex-col items-center mt-1">

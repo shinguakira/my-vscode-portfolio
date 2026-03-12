@@ -14,9 +14,14 @@ export function ProfessionalNotifications() {
   if (loading) return <LoadingState />
   if (error || !notifications) return <ErrorState message={error ?? undefined} />
 
-  const t = locale === "en"
-    ? { title: "Notifications", sub: "Updates & Announcements", empty: "No notifications at this time." }
-    : { title: "お知らせ", sub: "更新情報・アナウンス", empty: "現在お知らせはありません。" }
+  const t =
+    locale === "en"
+      ? {
+          title: "Notifications",
+          sub: "Updates & Announcements",
+          empty: "No notifications at this time.",
+        }
+      : { title: "お知らせ", sub: "更新情報・アナウンス", empty: "現在お知らせはありません。" }
 
   return (
     <div className="min-h-full bg-white">

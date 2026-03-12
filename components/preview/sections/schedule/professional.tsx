@@ -12,9 +12,28 @@ export function ProfessionalSchedule() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
-  const t = locale === "en"
-    ? { title: "Schedule", sub: "Availability & Calendar", loading: "Loading calendar...", error: "Unable to load calendar", refresh: "Refresh", open: "Open Full Calendar", tz: "Timezone: Asia/Tokyo (JST)", note: "Feel free to contact me to schedule a meeting or discuss availability." }
-    : { title: "スケジュール", sub: "空き状況カレンダー", loading: "カレンダーを読み込み中...", error: "カレンダーを読み込めませんでした", refresh: "更新", open: "フルカレンダーを開く", tz: "タイムゾーン: Asia/Tokyo (JST)", note: "ミーティングのスケジュールについてはお気軽にお問い合わせください。" }
+  const t =
+    locale === "en"
+      ? {
+          title: "Schedule",
+          sub: "Availability & Calendar",
+          loading: "Loading calendar...",
+          error: "Unable to load calendar",
+          refresh: "Refresh",
+          open: "Open Full Calendar",
+          tz: "Timezone: Asia/Tokyo (JST)",
+          note: "Feel free to contact me to schedule a meeting or discuss availability.",
+        }
+      : {
+          title: "スケジュール",
+          sub: "空き状況カレンダー",
+          loading: "カレンダーを読み込み中...",
+          error: "カレンダーを読み込めませんでした",
+          refresh: "更新",
+          open: "フルカレンダーを開く",
+          tz: "タイムゾーン: Asia/Tokyo (JST)",
+          note: "ミーティングのスケジュールについてはお気軽にお問い合わせください。",
+        }
 
   const calendarUrl = `https://calendar.google.com/calendar/embed?src=${encodeURIComponent(CALENDAR_ID)}&ctz=Asia%2FTokyo`
 
@@ -63,7 +82,10 @@ export function ProfessionalSchedule() {
               <div className="flex items-center justify-center h-96 bg-gray-50">
                 <div className="text-center">
                   <p className="text-red-600 mb-4">{t.error}</p>
-                  <button onClick={() => window.location.reload()} className="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 transition text-sm">
+                  <button
+                    onClick={() => window.location.reload()}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 transition text-sm"
+                  >
                     {t.refresh}
                   </button>
                 </div>
@@ -75,16 +97,20 @@ export function ProfessionalSchedule() {
                 width="100%"
                 className="h-96 md:h-[600px] w-full"
                 title={t.title}
-                onLoad={() => { setLoading(false); setError(false) }}
-                onError={() => { setLoading(false); setError(true) }}
+                onLoad={() => {
+                  setLoading(false)
+                  setError(false)
+                }}
+                onError={() => {
+                  setLoading(false)
+                  setError(true)
+                }}
               />
             )}
           </div>
         </div>
 
-        {!error && !loading && (
-          <p className="text-center text-gray-500 text-sm mt-8">{t.note}</p>
-        )}
+        {!error && !loading && <p className="text-center text-gray-500 text-sm mt-8">{t.note}</p>}
       </div>
     </div>
   )

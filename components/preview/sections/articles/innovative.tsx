@@ -14,9 +14,10 @@ export function InnovativeArticles() {
   if (loading) return <LoadingState />
   if (error || !data) return <ErrorState message={error ?? undefined} />
 
-  const t = locale === "en"
-    ? { title: "ARTICLES", sub: "Technical Writing", total: "Published" }
-    : { title: "ARTICLES", sub: "技術記事", total: "件公開" }
+  const t =
+    locale === "en"
+      ? { title: "ARTICLES", sub: "Technical Writing", total: "Published" }
+      : { title: "ARTICLES", sub: "技術記事", total: "件公開" }
 
   return (
     <div className="min-h-full bg-black relative overflow-hidden">
@@ -69,7 +70,11 @@ export function InnovativeArticles() {
                         ))}
                       </div>
                       <div className="flex items-center gap-5 text-sm text-gray-500">
-                        <span>{new Date(article.created_at).toLocaleDateString(locale === "en" ? "en-US" : "ja-JP")}</span>
+                        <span>
+                          {new Date(article.created_at).toLocaleDateString(
+                            locale === "en" ? "en-US" : "ja-JP",
+                          )}
+                        </span>
                         <span className="flex items-center gap-1.5 text-pink-400/70">
                           <Heart className="w-4 h-4" />
                           {article.likes_count}

@@ -11,10 +11,7 @@ import { usePortfolioData } from "./use-portfolio-data"
 export function useSkillsData() {
   const locale = useLocale()
 
-  const fetcher = useCallback(
-    (signal: AbortSignal) => fetchSkills(locale, signal),
-    [locale],
-  )
+  const fetcher = useCallback((signal: AbortSignal) => fetchSkills(locale, signal), [locale])
 
   return usePortfolioData<SkillItem[]>(`skills-${locale}`, fetcher)
 }

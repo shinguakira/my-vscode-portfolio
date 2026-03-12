@@ -42,7 +42,9 @@ export function ModernFaq() {
                   <div className="flex items-center gap-2 mb-2">
                     <h3 className="text-lg font-semibold text-white">{item.question}</h3>
                     {item.category && (
-                      <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-${COLORS[i % COLORS.length]}-500/20 text-${COLORS[i % COLORS.length]}-300 border border-${COLORS[i % COLORS.length]}-500/30`}>
+                      <span
+                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-${COLORS[i % COLORS.length]}-500/20 text-${COLORS[i % COLORS.length]}-300 border border-${COLORS[i % COLORS.length]}-500/30`}
+                      >
                         {item.category}
                       </span>
                     )}

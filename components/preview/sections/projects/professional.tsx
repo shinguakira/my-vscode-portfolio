@@ -41,7 +41,10 @@ export function ProfessionalProjects() {
                 </p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.technologies.map((tech) => (
-                    <span key={tech} className="px-3 py-1 border border-gray-300 text-gray-700 text-sm">
+                    <span
+                      key={tech}
+                      className="px-3 py-1 border border-gray-300 text-gray-700 text-sm"
+                    >
                       {tech}
                     </span>
                   ))}

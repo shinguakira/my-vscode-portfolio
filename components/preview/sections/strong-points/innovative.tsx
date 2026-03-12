@@ -2,7 +2,6 @@
 
 import { ErrorState } from "@/components/preview/error-state"
 import { LoadingState } from "@/components/preview/loading-state"
-import { useLocale } from "@/contexts/locale-context"
 import { useStrongPointsData } from "@/hooks/use-strong-points-data"
 
 const GRADIENTS = [
@@ -18,7 +17,6 @@ const GRADIENTS = [
 ]
 
 export function InnovativeStrongPoints() {
-  const locale = useLocale()
   const { data: strongPoints, loading, error } = useStrongPointsData()
 
   if (loading) return <LoadingState />

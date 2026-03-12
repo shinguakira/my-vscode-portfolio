@@ -6,11 +6,15 @@ import { useLocale } from "@/contexts/locale-context"
 import { useTheme } from "@/contexts/theme-context"
 import { useChangelogData } from "@/hooks/use-changelog-data"
 
-// API returns nested locale objects {ja: {description}, en: {description}}
-// but the TS type says flat {description: string}. Handle both at runtime.
-function getChangeDescription(change: Record<string, unknown>, locale: string): string {
-  if (typeof change.description === "string") return change.description
-  const localized = locale === "ja" ? (change as any).ja : (change as any).en
+interface LocalizedChange {
+  description: string
+  ja?: { description: string }
+  en?: { description: string }
+}
+
+function getChangeDescription(change: LocalizedChange, locale: string): string {
+  if (typeof change.description === "string" && change.description) return change.description
+  const localized = locale === "ja" ? change.ja : change.en
   return localized?.description ?? ""
 }
 
@@ -64,7 +68,9 @@ export function ChangelogPanel() {
 
       {changelog.map((entry, idx) => {
         const type = versionType(entry.version)
-        const firstDesc = entry.changes[0] ? getChangeDescription(entry.changes[0] as any, locale) : ""
+        const firstDesc = entry.changes[0]
+          ? getChangeDescription(entry.changes[0] as unknown as LocalizedChange, locale)
+          : ""
         const title = firstDesc.split("\n")[0].slice(0, 60)
         return (
           <div
@@ -81,11 +87,7 @@ export function ChangelogPanel() {
                   className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full z-10"
                   style={{
                     backgroundColor:
-                      type === "major"
-                        ? "#22c55e"
-                        : type === "minor"
-                          ? accentColor
-                          : "#6b7280",
+                      type === "major" ? "#22c55e" : type === "minor" ? accentColor : "#6b7280",
                   }}
                 />
               </div>
@@ -130,7 +132,9 @@ export function ChangelogPanel() {
                           !
                         </div>
                       )}
-                      <span className="line-clamp-1">{getChangeDescription(change as any, locale)}</span>
+                      <span className="line-clamp-1">
+                        {getChangeDescription(change as unknown as LocalizedChange, locale)}
+                      </span>
                     </div>
                   ))}
                   {entry.changes.length > 3 && (
