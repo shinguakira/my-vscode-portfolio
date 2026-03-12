@@ -26,10 +26,10 @@ import { useFileSearch } from "@/hooks/use-file-search"
 import { useNotificationsData } from "@/hooks/use-notifications-data"
 import { useProfileData } from "@/hooks/use-profile-data"
 import { useProjectsData } from "@/hooks/use-projects-data"
-import { useSkillsData } from "@/hooks/use-skills-data"
-import { useStrongPointsData } from "@/hooks/use-strong-points-data"
 import { useResponsive } from "@/hooks/use-responsive"
 import { useSettings } from "@/hooks/use-settings"
+import { useSkillsData } from "@/hooks/use-skills-data"
+import { useStrongPointsData } from "@/hooks/use-strong-points-data"
 import { useTabs } from "@/hooks/use-tabs"
 import type { FileItem, SearchResult } from "@/types"
 
@@ -75,7 +75,18 @@ function VSCodeLayoutInner({
       .join(",\n")
 
     const skillsContent = skills
-      ? JSON.stringify({ skills: skills.map((s) => ({ name: s.name, category: s.category, years: s.years, proficiency: s.proficiency })) }, null, 2)
+      ? JSON.stringify(
+          {
+            skills: skills.map((s) => ({
+              name: s.name,
+              category: s.category,
+              years: s.years,
+              proficiency: s.proficiency,
+            })),
+          },
+          null,
+          2,
+        )
       : '{\n  "skills": []\n}'
 
     const experienceContent = experience
@@ -87,7 +98,11 @@ function VSCodeLayoutInner({
       : "// Loading FAQ..."
 
     const contactContent = contact
-      ? JSON.stringify({ contact: { email: contact.email, phone: contact.phone, address: contact.address } }, null, 2)
+      ? JSON.stringify(
+          { contact: { email: contact.email, phone: contact.phone, address: contact.address } },
+          null,
+          2,
+        )
       : '{\n  "contact": {}\n}'
 
     const strongPointsContent = strongPoints
@@ -103,7 +118,11 @@ function VSCodeLayoutInner({
       : "# Articles\n\nLoading..."
 
     const notificationsContent = notifications
-      ? JSON.stringify({ notifications: notifications.map((n) => ({ title: n.title, date: n.date })) }, null, 2)
+      ? JSON.stringify(
+          { notifications: notifications.map((n) => ({ title: n.title, date: n.date })) },
+          null,
+          2,
+        )
       : '{\n  "notifications": []\n}'
 
     const sections: FileItem[] = [
@@ -113,7 +132,12 @@ function VSCodeLayoutInner({
       { name: "contact.json", type: "file", icon: "json", content: contactContent },
       { name: "experience.ts", type: "file", icon: "typescript", content: experienceContent },
       { name: "strong-points.js", type: "file", icon: "javascript", content: strongPointsContent },
-      { name: "certifications.ts", type: "file", icon: "typescript", content: certificationsContent },
+      {
+        name: "certifications.ts",
+        type: "file",
+        icon: "typescript",
+        content: certificationsContent,
+      },
     ]
     const projectsFolder: FileItem = {
       name: "projects",
@@ -144,7 +168,18 @@ function VSCodeLayoutInner({
       },
       { name: "schedule.exe", type: "file", icon: "calendar", content: "// Schedule" },
     ]
-  }, [projects, profile, skills, experience, faqs, contact, strongPoints, certifications, articles, notifications])
+  }, [
+    projects,
+    profile,
+    skills,
+    experience,
+    faqs,
+    contact,
+    strongPoints,
+    certifications,
+    articles,
+    notifications,
+  ])
 
   const {
     tabs,

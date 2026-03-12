@@ -11,7 +11,10 @@ import { usePortfolioData } from "./use-portfolio-data"
 export function useCertificationsData() {
   const locale = useLocale()
 
-  const fetcher = useCallback((signal: AbortSignal) => fetchCertifications(locale, signal), [locale])
+  const fetcher = useCallback(
+    (signal: AbortSignal) => fetchCertifications(locale, signal),
+    [locale],
+  )
 
   return usePortfolioData<CertificationItem[]>(`certifications-${locale}`, fetcher)
 }
