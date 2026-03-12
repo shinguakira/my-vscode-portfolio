@@ -25,7 +25,7 @@ export function InnovativeNotifications() {
         <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-fuchsia-500/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-full mx-auto px-4 short:px-2 py-20 short:py-6">
+      <div className="relative max-w-6xl mx-auto px-4 short:px-2 py-20 short:py-6">
         <div className="text-center mb-16 short:mb-4">
           <h1 className="text-8xl short:text-3xl font-black mb-6 short:mb-2 text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400">
             {t.title}

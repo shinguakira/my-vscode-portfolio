@@ -14,7 +14,7 @@ export function ProfessionalProfile() {
 
   return (
     <div className="min-h-full bg-white">
-      <div className="max-w-full mx-auto px-4 short:px-2 py-24 short:py-8">
+      <div className="max-w-6xl mx-auto px-4 short:px-2 py-24 short:py-8">
         <div className="mb-24 short:mb-6 border-b border-gray-200 pb-16 short:pb-4">
           <div className="flex items-start gap-8 short:gap-4 mb-8 short:mb-4">
             <div className="w-32 h-32 short:w-16 short:h-16 rounded-full bg-gray-900 flex items-center justify-center text-4xl short:text-xl font-bold text-white shrink-0">

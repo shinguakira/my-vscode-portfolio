@@ -16,7 +16,7 @@ export function ModernFaq() {
 
   return (
     <div className="min-h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      <div className="max-w-full mx-auto px-4 short:px-2 py-16 short:py-6">
+      <div className="max-w-6xl mx-auto px-4 short:px-2 py-16 short:py-6">
         <div className="mb-12 short:mb-4 text-center">
           <h1 className="text-5xl short:text-2xl font-bold mb-4 short:mb-2 bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 bg-clip-text text-transparent">
             {locale === "en" ? "Frequently Asked Questions" : "よくある質問"}

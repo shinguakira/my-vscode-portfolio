@@ -20,7 +20,7 @@ export function ProfessionalSchedule() {
 
   return (
     <div className="min-h-full bg-white">
-      <div className="max-w-full mx-auto px-4 short:px-2 py-24 short:py-8">
+      <div className="max-w-6xl mx-auto px-4 short:px-2 py-24 short:py-8">
         <div className="mb-12 short:mb-4 border-b border-gray-200 pb-8 short:pb-3">
           <h1 className="text-5xl short:text-2xl font-serif font-bold text-gray-900 mb-3 short:mb-1">
             {t.title}

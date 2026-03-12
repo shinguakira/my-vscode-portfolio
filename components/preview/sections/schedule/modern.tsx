@@ -20,7 +20,7 @@ export function ModernSchedule() {
 
   return (
     <div className="min-h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      <div className="max-w-full mx-auto px-4 short:px-2 py-16 short:py-6">
+      <div className="max-w-6xl mx-auto px-4 short:px-2 py-16 short:py-6">
         <div className="mb-10 short:mb-4 text-center">
           <h1 className="text-5xl short:text-2xl font-bold mb-4 short:mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
             {t.title}
