@@ -53,6 +53,35 @@ export interface SearchResult {
   matches: Array<{ line: number; text: string; matchIndex: number }>
 }
 
+export interface Notification {
+  title: string
+  content: string
+  date: string
+}
+
+export interface ArticleTag {
+  name: string
+  versions: string[]
+}
+
+export interface Article {
+  id: string
+  title: string
+  url: string
+  created_at: string
+  updated_at: string
+  likes_count: number
+  comments_count: number
+  stocks_count: number
+  reactions_count: number
+  tags: ArticleTag[]
+}
+
+export interface ArticlesData {
+  totalCount: number
+  articles: Article[]
+}
+
 export interface Extension {
   id: string
   name: string

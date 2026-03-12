@@ -11,6 +11,8 @@ import type {
   StrongPointsResponse,
 } from "@shinguakira/portfolio-api-types"
 
+import type { ArticlesData, Notification } from "@/types"
+
 import { fetchPortfolioApi } from "./client"
 
 export const fetchProfile = (locale: string, signal?: AbortSignal) =>
@@ -42,3 +44,9 @@ export const fetchLinks = (signal?: AbortSignal) =>
 
 export const fetchEducation = (locale: string, signal?: AbortSignal) =>
   fetchPortfolioApi<EducationResponse>("education", locale, signal)
+
+export const fetchNotifications = (locale: string, signal?: AbortSignal) =>
+  fetchPortfolioApi<Notification[]>("notifications", locale, signal)
+
+export const fetchArticles = (signal?: AbortSignal) =>
+  fetchPortfolioApi<ArticlesData>("articles", undefined, signal)
