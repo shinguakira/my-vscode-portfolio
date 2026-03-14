@@ -5,7 +5,7 @@ import { useState } from "react"
 
 import { useLocale } from "@/contexts/locale-context"
 
-const CALENDAR_ID = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_ID || "shinguakira1022@gmail.com"
+const CALENDAR_ID = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_ID || ""
 
 export function ProfessionalSchedule() {
   const locale = useLocale()

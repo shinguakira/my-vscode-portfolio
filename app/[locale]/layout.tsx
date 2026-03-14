@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from "next-intl"
 import type React from "react"
 
 import { LocaleProvider } from "@/contexts/locale-context"
+import { fetchProfile } from "@/lib/api/endpoints"
 import { routing } from "@/lib/i18n/routing"
 
 const geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -22,56 +23,44 @@ export async function generateMetadata({
   const { locale } = await params
   const isEn = locale === "en"
 
+  let name = "Web Dev"
+  let title = isEn ? "Full-Stack Engineer" : "フルスタックエンジニア"
+  let summary = isEn
+    ? "Full-stack development with React, Next.js, TypeScript, Python, and AWS."
+    : "React, Next.js, TypeScript, Python, AWSなどモダン技術スタックでのフルスタック開発。"
+
+  try {
+    const profile = await fetchProfile(locale)
+    name = profile.name || name
+    title = profile.title || title
+    summary = profile.summary || summary
+  } catch {
+    // use defaults
+  }
+
   return {
-    title: isEn
-      ? "Akira Shingu | Full-Stack Engineer Portfolio"
-      : "神宮 章 | Akira Shingu - フルスタックエンジニア ポートフォリオ",
+    title: `${name} | ${title}`,
     description: isEn
-      ? "Portfolio of Akira Shingu — Full-stack development with React, Next.js, TypeScript, Python, and AWS."
-      : "神宮 章（しんぐう あきら / Akira Shingu）のポートフォリオサイト。React, Next.js, TypeScript, Python, AWSなどモダン技術スタックでのフルスタック開発。",
-    authors: [{ name: isEn ? "Akira Shingu" : "神宮 章" }],
-    creator: isEn ? "Akira Shingu" : "神宮 章",
+      ? `Portfolio of ${name} — ${summary}`
+      : `${name}のポートフォリオサイト。${summary}`,
+    authors: [{ name }],
+    creator: name,
     keywords: isEn
-      ? [
-          "Akira Shingu",
-          "Full-Stack Engineer",
-          "React",
-          "Next.js",
-          "TypeScript",
-          "Freelance",
-          "Portfolio",
-          "Web Development",
-        ]
-      : [
-          "神宮 章",
-          "Akira Shingu",
-          "しんぐう あきら",
-          "シングウ アキラ",
-          "フルスタックエンジニア",
-          "React",
-          "Next.js",
-          "TypeScript",
-          "フリーランス",
-          "ポートフォリオ",
-          "Web開発",
-        ],
+      ? [name, "Full-Stack Engineer", "React", "Next.js", "TypeScript", "Freelance", "Portfolio", "Web Development"]
+      : [name, "フルスタックエンジニア", "React", "Next.js", "TypeScript", "フリーランス", "ポートフォリオ", "Web開発"],
     openGraph: {
-      title: isEn
-        ? "Akira Shingu | Full-Stack Engineer"
-        : "神宮 章 | Akira Shingu - フルスタックエンジニア",
-      description: isEn
-        ? "Full-stack development with React, Next.js, TypeScript, and AWS. 5+ years of experience."
-        : "React, Next.js, TypeScript, AWSを活用したフルスタック開発。5年以上の実績。",
+      title: `${name} | ${title}`,
+      description: summary,
       type: "website",
       locale: isEn ? "en_US" : "ja_JP",
-      siteName: isEn ? "Akira Shingu Portfolio" : "神宮 章 Portfolio",
+      siteName: `${name} Portfolio`,
     },
     twitter: {
       card: "summary_large_image",
-      title: isEn ? "Akira Shingu | Full-Stack Engineer" : "神宮 章 | Akira Shingu",
+      title: `${name} | ${title}`,
       description: isEn
-        ? "Full-Stack Engineer Akira Shingu's Portfolio"
-        : "フルスタックエンジニア 神宮 章のポートフォリオ",
+        ? `${title} ${name}'s Portfolio`
+        : `${title} ${name}のポートフォリオ`,
     },
     alternates: {
       canonical: "/",
@@ -104,6 +93,34 @@ export const viewport: Viewport = {
   themeColor: "#0d0d0d",
 }
 
+async function StructuredData({ locale }: { locale: string }) {
+  let name = "Web Dev"
+  let jobTitle = locale === "en" ? "Full-Stack Engineer" : "フルスタックエンジニア"
+
+  try {
+    const profile = await fetchProfile(locale)
+    name = profile.name || name
+    jobTitle = profile.title || jobTitle
+  } catch {
+    // use defaults
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name,
+          jobTitle,
+          knowsAbout: ["React", "Next.js", "TypeScript", "Python", "AWS"],
+        }),
+      }}
+    />
+  )
+}
+
 export default async function LocaleLayout({
   children,
   params,
@@ -120,20 +137,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: locale === "en" ? "Akira Shingu" : "神宮 章",
-              alternateName: ["Akira Shingu", "しんぐう あきら", "シングウ アキラ"],
-              jobTitle: locale === "en" ? "Full-Stack Engineer" : "フルスタックエンジニア",
-              knowsAbout: ["React", "Next.js", "TypeScript", "Python", "AWS"],
-              url: "https://yoursite.com",
-            }),
-          }}
-        />
+        <StructuredData locale={locale} />
       </head>
       <body className={`${geistMono.className} antialiased`}>
         <NextIntlClientProvider>
