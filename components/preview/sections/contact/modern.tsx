@@ -1,6 +1,6 @@
 "use client"
 
-import { CheckCircle, Mail, MapPin, Phone, Send } from "lucide-react"
+import { CheckCircle, Mail, MapPin, Send } from "lucide-react"
 
 import { ErrorState } from "@/components/preview/error-state"
 import { LoadingState } from "@/components/preview/loading-state"
@@ -37,22 +37,15 @@ export function ModernContact() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 short:gap-3 mb-12 short:mb-4">
-          <a href={`mailto:${contact.email}`} className="block">
-            <div className="rounded-xl p-6 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur hover:border-slate-700 transition-all group h-full">
-              <div className="w-12 h-12 short:w-8 short:h-8 rounded-lg bg-blue-600/20 flex items-center justify-center mb-4 short:mb-2 text-blue-400 group-hover:scale-110 transition-transform">
-                <Mail className="w-6 h-6" />
-              </div>
-              <h3 className="text-white font-semibold mb-1">Email</h3>
-              <p className="text-slate-400 text-sm">{contact.email}</p>
-            </div>
-          </a>
+        <div className="grid md:grid-cols-2 gap-6 short:gap-3 mb-12 short:mb-4">
           <div className="rounded-xl p-6 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur h-full">
-            <div className="w-12 h-12 short:w-8 short:h-8 rounded-lg bg-purple-600/20 flex items-center justify-center mb-4 short:mb-2 text-purple-400">
-              <Phone className="w-6 h-6" />
+            <div className="w-12 h-12 short:w-8 short:h-8 rounded-lg bg-blue-600/20 flex items-center justify-center mb-4 short:mb-2 text-blue-400">
+              <Mail className="w-6 h-6" />
             </div>
-            <h3 className="text-white font-semibold mb-1">Phone</h3>
-            <p className="text-slate-400 text-sm">{contact.phone}</p>
+            <h3 className="text-white font-semibold mb-1">Email</h3>
+            <p className="text-slate-400 text-sm">
+              {locale === "en" ? "Use the form below" : "下記フォームよりご連絡ください"}
+            </p>
           </div>
           <div className="rounded-xl p-6 short:p-3 bg-slate-900/50 border-slate-800 backdrop-blur h-full">
             <div className="w-12 h-12 short:w-8 short:h-8 rounded-lg bg-cyan-600/20 flex items-center justify-center mb-4 short:mb-2 text-cyan-400">

@@ -1,6 +1,6 @@
 "use client"
 
-import { CheckCircle, Mail, MapPin, Phone, Send } from "lucide-react"
+import { CheckCircle, Mail, MapPin, Send } from "lucide-react"
 
 import { ErrorState } from "@/components/preview/error-state"
 import { LoadingState } from "@/components/preview/loading-state"
@@ -41,25 +41,15 @@ export function ProfessionalContact() {
               {locale === "en" ? "Contact Info" : "連絡先"}
             </h2>
             <div className="space-y-6">
-              <a
-                href={`mailto:${contact.email}`}
-                className="flex items-center gap-4 hover:opacity-70 transition-opacity"
-              >
+              <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="text-xs text-gray-500 uppercase tracking-wide">Email</div>
-                  <div className="text-gray-900">{contact.email}</div>
-                </div>
-              </a>
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-xs text-gray-500 uppercase tracking-wide">Phone</div>
-                  <div className="text-gray-900">{contact.phone}</div>
+                  <div className="text-gray-900">
+                    {locale === "en" ? "Use the form to get in touch" : "フォームよりご連絡ください"}
+                  </div>
                 </div>
               </div>
               <div className="flex items-center gap-4">

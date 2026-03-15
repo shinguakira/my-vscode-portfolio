@@ -99,7 +99,7 @@ function VSCodeLayoutInner({
 
     const contactContent = contact
       ? JSON.stringify(
-          { contact: { email: contact.email, phone: contact.phone, address: contact.address } },
+          { contact: { address: contact.address } },
           null,
           2,
         )

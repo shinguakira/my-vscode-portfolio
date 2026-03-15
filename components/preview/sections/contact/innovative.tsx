@@ -1,6 +1,6 @@
 "use client"
 
-import { CheckCircle, Mail, MapPin, Phone, Send } from "lucide-react"
+import { CheckCircle, Mail, MapPin, Send } from "lucide-react"
 
 import { ErrorState } from "@/components/preview/error-state"
 import { LoadingState } from "@/components/preview/loading-state"
@@ -9,7 +9,6 @@ import { useContactForm } from "@/hooks/use-contact-form"
 
 const ITEMS = [
   { key: "email", label: "Email", gradient: "from-rose-500 to-pink-500", Icon: Mail },
-  { key: "phone", label: "Phone", gradient: "from-pink-500 to-purple-500", Icon: Phone },
   { key: "address", label: "Address", gradient: "from-purple-500 to-indigo-500", Icon: MapPin },
 ] as const
 
@@ -48,15 +47,12 @@ export function InnovativeContact() {
 
         <div className="grid md:grid-cols-3 gap-6 short:gap-3 mb-12 short:mb-4">
           {ITEMS.map(({ key, label, gradient, Icon }) => {
-            const value = contact[key]
-            const href = key === "email" ? `mailto:${value}` : undefined
-            const Wrapper = href ? "a" : "div"
+            const value = key === "email" ? "Use the form below" : contact[key]
+            const Wrapper = "div" as const
             return (
               <Wrapper
                 key={key}
-                {...(href
-                  ? { href, className: "group relative block" }
-                  : { className: "group relative block" })}
+                className="group relative block"
               >
                 <div
                   className={`absolute -inset-0.5 bg-gradient-to-r ${gradient} rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-500`}
