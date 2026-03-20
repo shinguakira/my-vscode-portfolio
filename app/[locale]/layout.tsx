@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from "next-intl"
 import type React from "react"
 
 import { LocaleProvider } from "@/contexts/locale-context"
+import { PWARegister } from "@/components/pwa-register"
 import { fetchProfile } from "@/lib/api/endpoints"
 import { routing } from "@/lib/i18n/routing"
 
@@ -61,6 +62,12 @@ export async function generateMetadata({
       description: isEn
         ? `${title} ${name}'s Portfolio`
         : `${title} ${name}のポートフォリオ`,
+    },
+    manifest: "/manifest.json",
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "black-translucent",
+      title: "Portfolio",
     },
     alternates: {
       canonical: "/",
@@ -143,6 +150,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <LocaleProvider locale={locale}>{children}</LocaleProvider>
         </NextIntlClientProvider>
+        <PWARegister />
         <Analytics />
       </body>
     </html>
