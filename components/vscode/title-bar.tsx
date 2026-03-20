@@ -1,6 +1,6 @@
 "use client"
 
-import { Bell, FileText, Globe, HelpCircle, PanelBottom, Search } from "lucide-react"
+import { Bell, Download, FileText, Globe, HelpCircle, PanelBottom, Search } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 import type React from "react"
 import { useState } from "react"
@@ -8,6 +8,7 @@ import { useState } from "react"
 import { useLocale } from "@/contexts/locale-context"
 import { useTheme } from "@/contexts/theme-context"
 import { useNotificationsData } from "@/hooks/use-notifications-data"
+import { usePwaInstall } from "@/hooks/use-pwa-install"
 import { adjustBrightness } from "@/lib/color-utils"
 
 import { NotificationPopup } from "./notification-popup"
@@ -108,8 +109,9 @@ export function TitleBar({
         </div>
       </div>
 
-      {/* 右側: 通知 + 言語切替 + ウィンドウ操作ボタン風 */}
+      {/* 右側: インストール + 通知 + 言語切替 + ウィンドウ操作ボタン風 */}
       <div className="flex items-center justify-end gap-1 sm:gap-2 md:gap-4">
+        <PwaInstallButton />
         <div className="relative">
           <button
             onClick={() => setBellOpen((v) => !v)}
@@ -152,6 +154,74 @@ export function TitleBar({
       </div>
     </div>
   )
+}
+
+function PwaInstallButton() {
+  const locale = useLocale()
+  const { canInstall, isInstalled, isIOS, install } = usePwaInstall()
+  const { textSecondary, accentColor, bgMain } = useTheme()
+  const [showIOSTip, setShowIOSTip] = useState(false)
+
+  if (isInstalled) return null
+
+  // Android / Chrome: native install prompt
+  if (canInstall) {
+    return (
+      <button
+        onClick={install}
+        className="p-0.5 sm:p-1 rounded hover:bg-white/10 transition-colors shrink-0"
+        title={locale === "en" ? "Install App" : "アプリをインストール"}
+        style={{ color: textSecondary }}
+      >
+        <Download className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4" />
+      </button>
+    )
+  }
+
+  // iOS: show tip to add to home screen
+  if (isIOS) {
+    return (
+      <div className="relative">
+        <button
+          onClick={() => setShowIOSTip((v) => !v)}
+          className="p-0.5 sm:p-1 rounded hover:bg-white/10 transition-colors shrink-0"
+          title={locale === "en" ? "Install App" : "アプリをインストール"}
+          style={{ color: textSecondary }}
+        >
+          <Download className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4" />
+        </button>
+        {showIOSTip && (
+          <>
+            <div className="fixed inset-0 z-40" onClick={() => setShowIOSTip(false)} />
+            <div
+              className="absolute right-0 top-full mt-1 z-50 p-3 rounded-md shadow-lg border text-[10px] sm:text-xs w-48 sm:w-56"
+              style={{
+                backgroundColor: bgMain,
+                borderColor: accentColor,
+                color: textSecondary,
+              }}
+            >
+              <p className="leading-relaxed">
+                {locale === "en" ? (
+                  <>
+                    Tap the <strong>Share</strong> button, then select{" "}
+                    <strong>&quot;Add to Home Screen&quot;</strong> to install this app.
+                  </>
+                ) : (
+                  <>
+                    <strong>共有</strong>ボタンをタップし、
+                    <strong>「ホーム画面に追加」</strong>を選択してインストールできます。
+                  </>
+                )}
+              </p>
+            </div>
+          </>
+        )}
+      </div>
+    )
+  }
+
+  return null
 }
 
 function LanguageToggle() {
