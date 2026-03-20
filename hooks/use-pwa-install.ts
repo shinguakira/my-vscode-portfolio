@@ -29,23 +29,27 @@ export function usePwaInstall() {
       setDeferredPrompt(e as BeforeInstallPromptEvent)
     }
 
-    window.addEventListener("beforeinstallprompt", handler)
-
-    window.addEventListener("appinstalled", () => {
+    const appInstalledHandler = () => {
       setIsInstalled(true)
       setDeferredPrompt(null)
-    })
+    }
 
-    return () => window.removeEventListener("beforeinstallprompt", handler)
+    window.addEventListener("beforeinstallprompt", handler)
+    window.addEventListener("appinstalled", appInstalledHandler)
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler)
+      window.removeEventListener("appinstalled", appInstalledHandler)
+    }
   }, [])
 
   const install = useCallback(async () => {
     if (!deferredPrompt) return false
     await deferredPrompt.prompt()
     const { outcome } = await deferredPrompt.userChoice
+    setDeferredPrompt(null)
     if (outcome === "accepted") {
       setIsInstalled(true)
-      setDeferredPrompt(null)
     }
     return outcome === "accepted"
   }, [deferredPrompt])
