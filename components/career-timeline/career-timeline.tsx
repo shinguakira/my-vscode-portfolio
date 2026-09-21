@@ -60,61 +60,23 @@ const BLOCK_COLORS = [
 
 /* ─── Dates for the timeline ─── */
 
-/** `parseDate` needs a month, so widen a bare year to January. */
+/**
+ * The API gives `startDate`/`endDate` as `YYYY-MM`, or `YYYY` where only the
+ * year is known. `parseDate` needs a month, so widen a bare year to January.
+ */
 function withMonth(d: string): string {
   return /^\d{4}$/.test(d) ? `${d}-01` : d
 }
 
-function extractYearMonth(s: string): string {
-  if (!s) return ""
-  if (s.includes("現在") || s.toLowerCase().includes("present") || s.includes("(現在)"))
-    return "present"
-  const jaMatch = s.match(/(\d{4})年(\d{1,2})月/)
-  if (jaMatch) return `${jaMatch[1]}-${jaMatch[2].padStart(2, "0")}`
-  const isoMatch = s.match(/(\d{4})[/-](\d{1,2})/)
-  if (isoMatch) return `${isoMatch[1]}-${isoMatch[2].padStart(2, "0")}`
-  const yearMatch = s.match(/(\d{4})/)
-  if (yearMatch) return `${yearMatch[1]}-01`
-  return ""
-}
-
-/**
- * Fallback for a deployment still pointing at an API that only returns
- * `period`.
- *
- * Split on the range separator only — whitespace on both sides. The English
- * period puts a hyphen inside the year-month as well (`2025-10 - 2026-07`), so
- * splitting on every hyphen tore the string into four pieces, dropped the end
- * date and fell through to "present".
- */
-function parsePeriod(period: string): { startDate: string; endDate: string } {
-  const parts = period.split(/\s+[-–—]\s+/)
-  const start = extractYearMonth(parts[0]?.trim() ?? "")
-  const end = extractYearMonth(parts[1]?.trim() ?? "")
-  return {
-    startDate: start || "2020-01",
-    endDate: end || "present",
-  }
-}
-
-function timelineDates(exp: WorkExperience): { startDate: string; endDate: string } {
-  if (!exp.startDate) return parsePeriod(exp.period)
-  return {
-    startDate: withMonth(exp.startDate),
-    endDate: exp.endDate ? withMonth(exp.endDate) : "present",
-  }
-}
-
 function toTimelineItems(experiences: WorkExperience[]): TimelineItem[] {
   return experiences.map((exp, i) => {
-    const { startDate, endDate } = timelineDates(exp)
     return {
       id: `${exp.company}-${i}`,
       name: exp.projectOverview || exp.role,
       company: exp.company,
       role: exp.role,
-      startDate,
-      endDate,
+      startDate: withMonth(exp.startDate),
+      endDate: exp.endDate ? withMonth(exp.endDate) : "present",
       color: BLOCK_COLORS[i % BLOCK_COLORS.length],
       tags: exp.technologies,
       description: exp.description.join("\n"),
