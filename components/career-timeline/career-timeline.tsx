@@ -58,7 +58,23 @@ const BLOCK_COLORS = [
   "#10b981",
 ]
 
-/* ─── Parse WorkExperience.period to startDate/endDate ─── */
+/* ─── Dates for the timeline ─── */
+
+/**
+ * The API serves machine-readable dates alongside the localized `period`
+ * string: `startDate`/`endDate` are `YYYY-MM`, or `YYYY` where only the year is
+ * known, and `endDate` is absent while the work is ongoing. They are optional
+ * here because a deployment still on an older API only returns `period`.
+ */
+type ApiWorkExperience = WorkExperience & {
+  startDate?: string
+  endDate?: string
+}
+
+/** `parseDate` needs a month, so widen a bare year to January. */
+function withMonth(d: string): string {
+  return /^\d{4}$/.test(d) ? `${d}-01` : d
+}
 
 function extractYearMonth(s: string): string {
   if (!s) return ""
@@ -73,8 +89,16 @@ function extractYearMonth(s: string): string {
   return ""
 }
 
+/**
+ * Fallback for responses without `startDate`/`endDate`.
+ *
+ * Split on the range separator only — whitespace on both sides. The English
+ * period puts a hyphen inside the year-month as well (`2025-10 - 2026-07`), so
+ * splitting on every hyphen tore the string into four pieces, dropped the end
+ * date and fell through to "present".
+ */
 function parsePeriod(period: string): { startDate: string; endDate: string } {
-  const parts = period.split(/\s*[-–]\s*/)
+  const parts = period.split(/\s+[-–—]\s+/)
   const start = extractYearMonth(parts[0]?.trim() ?? "")
   const end = extractYearMonth(parts[1]?.trim() ?? "")
   return {
@@ -83,9 +107,17 @@ function parsePeriod(period: string): { startDate: string; endDate: string } {
   }
 }
 
-function toTimelineItems(experiences: WorkExperience[]): TimelineItem[] {
+function timelineDates(exp: ApiWorkExperience): { startDate: string; endDate: string } {
+  if (!exp.startDate) return parsePeriod(exp.period)
+  return {
+    startDate: withMonth(exp.startDate),
+    endDate: exp.endDate ? withMonth(exp.endDate) : "present",
+  }
+}
+
+function toTimelineItems(experiences: ApiWorkExperience[]): TimelineItem[] {
   return experiences.map((exp, i) => {
-    const { startDate, endDate } = parsePeriod(exp.period)
+    const { startDate, endDate } = timelineDates(exp)
     return {
       id: `${exp.company}-${i}`,
       name: exp.projectOverview || exp.role,
@@ -143,7 +175,7 @@ export function CareerTimeline({
   experiences,
   variant = "modern",
 }: {
-  experiences: WorkExperience[]
+  experiences: ApiWorkExperience[]
   variant?: TimelineVariant
 }) {
   const locale = useLocale()
